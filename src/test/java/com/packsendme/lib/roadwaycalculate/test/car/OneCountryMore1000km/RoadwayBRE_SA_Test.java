@@ -1,4 +1,4 @@
-package com.packsendme.lib.roadwaycalculate.test.car;
+package com.packsendme.lib.roadwaycalculate.test.car.OneCountryMore1000km;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -57,7 +57,7 @@ import com.packsendme.roadway.bre.rule.model.RoadwayBRE_Model;
 		jsonSouthAmerica = mapper.writeValueAsString(roadwayBRE);
 		System.out.println(jsonSouthAmerica);
    		Assert.notNull(jsonSouthAmerica);
-   		inputJsonFileSouthAmerica(jsonSouthAmerica);
+   		//inputJsonFileSouthAmerica(jsonSouthAmerica);
    		
    		return roadwayBRE;
 	}
@@ -76,7 +76,7 @@ import com.packsendme.roadway.bre.rule.model.RoadwayBRE_Model;
 						MetricUnitMeasurement_Constants.kilograma_UnitMeasurement,MetricUnitMeasurement_Constants.kilometro_UnitMeasurement);
 			}
 			else if(way.equals(Roadway_Constants.ROADWAY_CAR)) {
-				ruleInstance_Model = new RuleInstance_Model(Roadway_Constants.ROADWAY_CAR, 8434.0, 200.0, false,
+				ruleInstance_Model = new RuleInstance_Model(Roadway_Constants.ROADWAY_CAR, 9972759.0, 200.0, false,
 						MetricUnitMeasurement_Constants.kilograma_UnitMeasurement,MetricUnitMeasurement_Constants.kilometro_UnitMeasurement);
 			}
 			else if(way.equals(Roadway_Constants.ROADWAY_MOTORCYCLE)) {
@@ -107,11 +107,21 @@ import com.packsendme.roadway.bre.rule.model.RoadwayBRE_Model;
 		for(String country : countryL) {
 			for(String way : wayL) {
 				
+				/*
+				 * RuleCosts_Model(Double weight_cost, Double distance_cost, Double worktime_cost, Double average_consumption_cost, 
+				 * Double tolls_average_cost, Double fuel_average_cost, String currency_cost, Double rate_availability)
+				 */
 				if(way.equals(Roadway_Constants.ROADWAY_BICYCLE)) {
 					ruleCosts = new RuleCosts_Model(0.1, 0.10, 0.10, 10.00, 2.21, 0.80, Currency_Constants.DOLLAR_CURRENCY_SYMBOL,0.0);
 				}
 				else if(way.equals(Roadway_Constants.ROADWAY_CAR)) {
-					ruleCosts = new RuleCosts_Model(0.01, 0.05, 0.05, 10.00, 2.21, 0.80, Currency_Constants.DOLLAR_CURRENCY_SYMBOL,0.0);
+					
+					/*
+					 * RuleCosts_Model(Double weight_cost, Double distance_cost, Double worktime_cost, Double average_consumption_cost, 
+					 * Double tolls_average_cost, Double fuel_average_cost, String currency_cost, Double rate_availability)
+					 */
+				
+					ruleCosts = new RuleCosts_Model(0.05, 0.05, 0.05, 10.00, 2.21, 0.80, Currency_Constants.DOLLAR_CURRENCY_SYMBOL,0.0);
 				}
 				else if(way.equals(Roadway_Constants.ROADWAY_MOTORCYCLE)) {
 					ruleCosts = new RuleCosts_Model(0.1, 0.5, 0.5, 10.00, 2.21, 0.80, Currency_Constants.DOLLAR_CURRENCY_SYMBOL,0.0);

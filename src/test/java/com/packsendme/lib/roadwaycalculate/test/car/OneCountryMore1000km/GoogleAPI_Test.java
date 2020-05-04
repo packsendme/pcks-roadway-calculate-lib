@@ -1,4 +1,4 @@
-package com.packsendme.lib.roadwaycalculate.test.car;
+package com.packsendme.lib.roadwaycalculate.test.car.OneCountryMore1000km;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,29 +15,18 @@ public class GoogleAPI_Test {
 		
 		GoogleAPITrackingResponse_Dto googleTrackingAPI = new GoogleAPITrackingResponse_Dto(); 
 		googleTrackingAPI.status = true;
-		googleTrackingAPI.distance_total = 9.0;
-		googleTrackingAPI.duration = 1536;
+		googleTrackingAPI.distance_total = 1544432.0;
+		googleTrackingAPI.duration = 73072;
 		
 		RoadwayTrackingResponse_Dto roadwayTracking1 = generateRoadwayTrackingBrasil();
-		//RoadwayTrackingResponse_Dto roadwayTracking2 = generateRoadwayTrackingArgentina();
-
 		trackingRoadwayMap.put("Brazil", roadwayTracking1);
-	//trackingRoadwayMap.put("Argentina", roadwayTracking2);
-		
 		googleTrackingAPI.trackingRoadway = trackingRoadwayMap;
-		
 		return googleTrackingAPI;
 	}
 	
-	
 	public RoadwayTrackingResponse_Dto generateRoadwayTrackingBrasil() {
-		RoadwayTrackingResponse_Dto roadwayTracking = new RoadwayTrackingResponse_Dto("Brazil", 0, 0.0, 9.0, 4.30, "R$", "KM");
-		
-		return roadwayTracking;
-	}
-	
-	public RoadwayTrackingResponse_Dto generateRoadwayTrackingArgentina() {
-		RoadwayTrackingResponse_Dto roadwayTracking = new RoadwayTrackingResponse_Dto("Argentina", 10, 12.80, 1373.0, 4.30, "R$", "KM");
+		//String name_country, int toll_amount, Double toll_price, Double country_distanceF, Double country_distanceM,Double fuel_price, String currency_price, String unity_measurement_distance
+		RoadwayTrackingResponse_Dto roadwayTracking = new RoadwayTrackingResponse_Dto("Brazil", 10, 0.84, 1.544,  1544426.0, 0.83, "R$", "KM");
 		
 		return roadwayTracking;
 	}
