@@ -19,7 +19,7 @@ import com.packsendme.roadway.bre.rule.costs.model.RuleCosts_Model;
 import com.packsendme.roadway.bre.rule.instance.model.RuleInstance_Model;
 
 @Component
-public abstract class Roadway_Abstract implements IRoadway_RuleCosts {
+public abstract class Roadway_Abstract implements IRoadway_Costs {
 		
 	
 	Map<String,RoadwayDataCalculatorResponse_Dto> roadwayDataCalculator = new HashMap<String,RoadwayDataCalculatorResponse_Dto>();
