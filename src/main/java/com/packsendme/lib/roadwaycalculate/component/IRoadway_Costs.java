@@ -1,10 +1,10 @@
 package com.packsendme.lib.roadwaycalculate.component;
 
 import com.packsendme.lib.common.response.dto.api.GoogleAPITrackingResponse_Dto;
-import com.packsendme.lib.simulation.request.dto.SimulationDataForCalculateRequest_Dto;
-import com.packsendme.lib.simulation.way.roadway.response.dto.RoadwayCalculatorResponse_Dto;
+import com.packsendme.lib.simulation.http.SimulationDataForCalculateRequest_Dto;
+import com.packsendme.lib.simulation.roadway.RoadwayCalculatorResponse_Dto;
 
-public interface IRoadway_RuleCosts {
+public interface IRoadway_Costs {
 	
 	// Calculator Controller
 	public RoadwayCalculatorResponse_Dto analyzeRule_data(GoogleAPITrackingResponse_Dto trackingAPI, SimulationDataForCalculateRequest_Dto simulationData, String way);

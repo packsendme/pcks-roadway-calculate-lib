@@ -1,0 +1,18 @@
+package com.packsendme.lib.roadwaycalculate.component;
+
+import com.packsendme.lib.common.response.dto.api.GoogleAPITrackingResponse_Dto;
+import com.packsendme.lib.simulation.http.SimulationDataForCalculateRequest_Dto;
+import com.packsendme.lib.simulation.roadway.RoadwayCalculatorResponse_Dto;
+import com.packsendme.lib.simulation.roadway.SimulationRoadwayResponse_Dto;
+
+public interface IRoadway_Instance {
+
+	public SimulationRoadwayResponse_Dto instanceRulesCosts(GoogleAPITrackingResponse_Dto simulationTrackingAPI, SimulationDataForCalculateRequest_Dto simulationData);
+
+	public RoadwayCalculatorResponse_Dto bicycleInstance(GoogleAPITrackingResponse_Dto simulationTrackingAPI, SimulationDataForCalculateRequest_Dto simulationData);
+	public RoadwayCalculatorResponse_Dto carInstance(GoogleAPITrackingResponse_Dto simulationTrackingAPI, SimulationDataForCalculateRequest_Dto simulationData);
+	public RoadwayCalculatorResponse_Dto motorcycleInstance(GoogleAPITrackingResponse_Dto simulationTrackingAPI, SimulationDataForCalculateRequest_Dto simulationData);
+	public RoadwayCalculatorResponse_Dto truckInstance(GoogleAPITrackingResponse_Dto simulationTrackingAPI, SimulationDataForCalculateRequest_Dto simulationData);
+	public RoadwayCalculatorResponse_Dto walkingInstance(GoogleAPITrackingResponse_Dto simulationTrackingAPI, SimulationDataForCalculateRequest_Dto simulationData);
+
+}

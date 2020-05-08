@@ -1,5 +1,4 @@
-package com.packsendme.lib.roadwaycalculate.test.car;
-import java.io.File;
+package com.packsendme.lib.roadwaycalculate.test.car.OneCountryless60km.copy;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -11,8 +10,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.packsendme.lib.common.constants.generic.MetricUnitMeasurement_Constants;
 import com.packsendme.lib.common.response.dto.api.GoogleAPITrackingResponse_Dto;
 import com.packsendme.lib.roadwaycalculate.component.RoadwayInstanceCosts;
-import com.packsendme.lib.simulation.request.dto.SimulationDataForCalculateRequest_Dto;
-import com.packsendme.lib.simulation.way.response.dto.SimulationRoadwayResponse_Dto;
+import com.packsendme.lib.simulation.http.SimulationDataForCalculateRequest_Dto;
+import com.packsendme.lib.simulation.roadway.SimulationRoadwayResponse_Dto;
 import com.packsendme.roadway.bre.rule.model.RoadwayBRE_Model;
 
  public class SimulationRoadway_SA_Test {
@@ -49,17 +48,10 @@ import com.packsendme.roadway.bre.rule.model.RoadwayBRE_Model;
 	}
 	
 	void inputJsonFileSouthAmerica(String jsonSouthAmerica) throws IOException, URISyntaxException {
-		ObjectMapper mapper = new ObjectMapper();
-		File file = new File(url_json);
-		if (file.length() != 0) {
-			String absolutePath = file.getAbsolutePath();
-			RoadwayBRE_Model obj = mapper.readValue(new File(absolutePath), RoadwayBRE_Model.class);
-			Assert.notNull(obj);
-		}
-		else {
-			try (FileWriter fileWriter = new FileWriter(url_json, true)) {
-			    fileWriter.write(jsonSouthAmerica);
-			}
+		try (FileWriter fileWriter = new FileWriter(url_json, true)) {
+		    fileWriter.write(jsonSouthAmerica);
+		    fileWriter.write(System.getProperty("line.separator"));
+		    fileWriter.close();
 		}
 	}
 	
