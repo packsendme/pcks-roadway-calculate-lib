@@ -12,9 +12,9 @@ import com.packsendme.lib.roadwaycalculate.component.rulesinstance.Car;
 import com.packsendme.lib.roadwaycalculate.component.rulesinstance.Motorcycle;
 import com.packsendme.lib.roadwaycalculate.component.rulesinstance.Truck;
 import com.packsendme.lib.roadwaycalculate.component.rulesinstance.Walking;
-import com.packsendme.lib.simulation.request.dto.SimulationDataForCalculateRequest_Dto;
-import com.packsendme.lib.simulation.way.response.dto.SimulationRoadwayResponse_Dto;
-import com.packsendme.lib.simulation.way.roadway.response.dto.RoadwayCalculatorResponse_Dto;
+import com.packsendme.lib.simulation.http.SimulationDataForCalculateRequest_Dto;
+import com.packsendme.lib.simulation.roadway.RoadwayCalculatorResponse_Dto;
+import com.packsendme.lib.simulation.roadway.SimulationRoadwayResponse_Dto;
 
 @Component
 public class RoadwayInstanceCosts implements IRoadway_Instance{
@@ -30,7 +30,7 @@ public class RoadwayInstanceCosts implements IRoadway_Instance{
 		roadwayMap.put(Roadway_Constants.ROADWAY_CAR, carResponse);
 
 		//Bicycle
-		RoadwayCalculatorResponse_Dto bicycleResponse = carInstance(simulationTrackingAPI,simulationData);
+		RoadwayCalculatorResponse_Dto bicycleResponse = bicycleInstance(simulationTrackingAPI,simulationData);
 		roadwayMap.put(Roadway_Constants.ROADWAY_BICYCLE, bicycleResponse);
 		
 		//Motorcycle

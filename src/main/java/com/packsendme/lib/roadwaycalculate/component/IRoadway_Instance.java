@@ -1,9 +1,9 @@
 package com.packsendme.lib.roadwaycalculate.component;
 
 import com.packsendme.lib.common.response.dto.api.GoogleAPITrackingResponse_Dto;
-import com.packsendme.lib.simulation.request.dto.SimulationDataForCalculateRequest_Dto;
-import com.packsendme.lib.simulation.way.response.dto.SimulationRoadwayResponse_Dto;
-import com.packsendme.lib.simulation.way.roadway.response.dto.RoadwayCalculatorResponse_Dto;
+import com.packsendme.lib.simulation.http.SimulationDataForCalculateRequest_Dto;
+import com.packsendme.lib.simulation.roadway.RoadwayCalculatorResponse_Dto;
+import com.packsendme.lib.simulation.roadway.SimulationRoadwayResponse_Dto;
 
 public interface IRoadway_Instance {
 
