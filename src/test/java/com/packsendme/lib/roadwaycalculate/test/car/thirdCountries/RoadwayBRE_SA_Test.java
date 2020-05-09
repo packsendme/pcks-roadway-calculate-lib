@@ -6,7 +6,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +40,7 @@ import com.packsendme.roadway.bre.rule.model.RoadwayBRE_Model;
 
 		// RoadwayModel
 		roadwayBRE.name_rule = name_rule;
-		roadwayBRE.date_creation = new Date();
+		roadwayBRE.date_creation = "2020-05-09";
 		roadwayBRE.date_change = null;
 		roadwayBRE.rate_reshipping = 100.0;
 		roadwayBRE.status = "Active";
