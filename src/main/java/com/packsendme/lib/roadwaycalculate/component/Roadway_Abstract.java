@@ -123,19 +123,30 @@ public abstract class Roadway_Abstract implements IRoadway_Costs {
 				System.out.println(" ========================  analyzeRule_data :: TOTAL $ ================ "+ vlrTotalDelivery);
 				System.out.println(" ");
 				System.out.println(" ");
-				
+
 				roadwayResponse = new RoadwayCalculatorResponse_Dto(
 						getTotalRateExchange(vlr_employer_total, simulationData),
 						getTotalRateExchange(vlr_packsend_total, simulationData),
 						getTotalRateExchange(vlr_delivery_total, simulationData),
 						getTotalRateExchange(vlrReshipping, simulationData),
 						getTotalRateExchange(vlrTotalDelivery, simulationData),
-						Calculate_Constants.STATUS_COSTS_SEND, roadwayDataCalculator);
+						Calculate_Constants.STATUS_COSTS_SEND);
+				/*
+				roadwayResponse = new RoadwayCalculatorResponse_Dto(
+						getTotalRateExchange(vlr_employer_total, simulationData),
+						getTotalRateExchange(vlr_packsend_total, simulationData),
+						getTotalRateExchange(vlr_delivery_total, simulationData),
+						getTotalRateExchange(vlrReshipping, simulationData),
+						getTotalRateExchange(vlrTotalDelivery, simulationData),
+						Calculate_Constants.STATUS_COSTS_SEND, roadwayDataCalculator);*/
 			}
 			else {
 				roadwayResponse = new RoadwayCalculatorResponse_Dto(
 						Calculate_Constants.VALUE_DEFAUL_S, Calculate_Constants.VALUE_DEFAUL_S, Calculate_Constants.VALUE_DEFAUL_S, 
-						Calculate_Constants.VALUE_DEFAUL_S, Calculate_Constants.VALUE_DEFAUL_S, Calculate_Constants.STATUS_COSTS_NSEND, null);
+						Calculate_Constants.VALUE_DEFAUL_S, Calculate_Constants.VALUE_DEFAUL_S, Calculate_Constants.STATUS_COSTS_NSEND); 
+/*				roadwayResponse = new RoadwayCalculatorResponse_Dto(
+						Calculate_Constants.VALUE_DEFAUL_S, Calculate_Constants.VALUE_DEFAUL_S, Calculate_Constants.VALUE_DEFAUL_S, 
+						Calculate_Constants.VALUE_DEFAUL_S, Calculate_Constants.VALUE_DEFAUL_S, Calculate_Constants.STATUS_COSTS_NSEND, null); */
 			}
 			return roadwayResponse;
 		}
