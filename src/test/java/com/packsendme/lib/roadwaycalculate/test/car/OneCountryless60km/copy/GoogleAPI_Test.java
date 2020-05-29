@@ -26,7 +26,7 @@ public class GoogleAPI_Test {
 	
 	//String name_country, int toll_amount, Double toll_price, Double country_distanceF, Double country_distanceM,Double fuel_price, String currency_price, String unity_measurement_distance
 	public RoadwayTrackingResponse_Dto generateRoadwayTrackingBrasil() {
-		RoadwayTrackingResponse_Dto roadwayTracking = new RoadwayTrackingResponse_Dto("Brazil", 0, 0.0, 9.2, 9180.0, 0.83, "R$", "KM");
+		RoadwayTrackingResponse_Dto roadwayTracking = new RoadwayTrackingResponse_Dto("Brazil", 0, 0.0, 9.2, 9180.0, 0.83,"KM");
 		return roadwayTracking;
 	}
 	
