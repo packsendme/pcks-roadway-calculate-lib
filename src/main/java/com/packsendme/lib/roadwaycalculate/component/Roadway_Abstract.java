@@ -26,6 +26,7 @@ public abstract class Roadway_Abstract implements IRoadway_Costs {
 	WeightConvert_Utility weightConvert = new WeightConvert_Utility();
 	FormatValueMoney valueFormatObj = new FormatValueMoney();
 	
+	
 	private double vlr_packsend_total = 0.0;
 	private double vlr_delivery_total = 0.0;
 	
@@ -189,7 +190,7 @@ public abstract class Roadway_Abstract implements IRoadway_Costs {
 			System.out.println(" ========================  getTotalRateExchange :: total_vlr ================ "+ total_vlr);
 			System.out.println(" ========================  getTotalRateExchange :: TOTAL-FORMAT ================ "+ totalExchange_vlr);
 			System.out.println(" ================================================================================");
-			return valueFormatObj.valueFormatToString(totalExchange_vlr, simulation.locale_language, simulation.locale_country);
+			return valueFormatObj.formatDoubleStringInCurrency(totalExchange_vlr, simulation.locale_language, simulation.locale_country);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
