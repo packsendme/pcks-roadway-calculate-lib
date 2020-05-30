@@ -111,7 +111,7 @@ import com.packsendme.roadway.bre.rule.model.RoadwayBRE_Model;
 				 * Double tolls_average_cost, Double fuel_average_cost, String currency_cost, Double rate_availability)
 				 */
 				if(way.equals(Roadway_Constants.ROADWAY_BICYCLE)) {
-					ruleCosts = new RuleCosts_Model(0.1, 0.10, 0.10, 10.00, 2.21,0.0);
+					ruleCosts = new RuleCosts_Model(0.1, 0.10, 0.10, 10.00, 2.21,"R$");
 				}
 				else if(way.equals(Roadway_Constants.ROADWAY_CAR)) {
 					
@@ -120,16 +120,16 @@ import com.packsendme.roadway.bre.rule.model.RoadwayBRE_Model;
 					 * Double tolls_average_cost, Double fuel_average_cost, String currency_cost, Double rate_availability)
 					 */
 				
-					ruleCosts = new RuleCosts_Model(0.05, 0.05, 0.05, 10.00, 2.21, 0.0);
+					ruleCosts = new RuleCosts_Model(0.05, 0.05, 0.05, 10.00, 2.21, "R$");
 				}
 				else if(way.equals(Roadway_Constants.ROADWAY_MOTORCYCLE)) {
-					ruleCosts = new RuleCosts_Model(0.1, 0.5, 0.5, 10.00, 2.21,0.0);
+					ruleCosts = new RuleCosts_Model(0.1, 0.5, 0.5, 10.00, 2.21,"R$");
 				}
 				else if(way.equals(Roadway_Constants.ROADWAY_TRUCK)) {
-					ruleCosts = new RuleCosts_Model(0.1, 0.10, 0.10, 10.00, 2.21,0.0);
+					ruleCosts = new RuleCosts_Model(0.1, 0.10, 0.10, 10.00, 2.21,"R$");
 				}
 				else if(way.equals(Roadway_Constants.ROADWAY_WALKING)) {
-					ruleCosts = new RuleCosts_Model(0.1, 0.10, 0.10, 10.00, 2.21,0.0);
+					ruleCosts = new RuleCosts_Model(0.1, 0.10, 0.10, 10.00, 2.21,"R$");
 				}
 				costsCountryWayL.put(way,ruleCosts);
 				ruleCosts = new RuleCosts_Model();
