@@ -34,7 +34,7 @@ import com.packsendme.roadway.bre.rule.model.RoadwayBRE_Model;
 		GoogleAPI_Test googleAPI = new GoogleAPI_Test();
 		GoogleAPITrackingResponse_Dto trackingAPI = googleAPI.generateGoogleAPI();
 			
-		SimulationDataForCalculateRequest_Dto simulationData = new SimulationDataForCalculateRequest_Dto(10.0, MetricUnitMeasurement_Constants.kilograma_UnitMeasurement, 
+		SimulationDataForCalculateRequest_Dto simulationData = new SimulationDataForCalculateRequest_Dto(10.0, 10.0, MetricUnitMeasurement_Constants.kilograma_UnitMeasurement, 
 				"EXP", "pt", "BR", 5.34, 10.0, roadwayBRE_cache);
 	
 		simulationRoadwayResponse = roadwayInstance.instanceRulesCosts(trackingAPI, simulationData);

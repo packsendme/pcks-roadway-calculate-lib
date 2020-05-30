@@ -61,7 +61,7 @@ public abstract class Roadway_Abstract implements IRoadway_Costs {
 			System.out.println(" ------------------------------- ");
 	
 			
-			if((simulationData.weight_product <= ruleInstance.weight_max) && (trackingAPI.distance_total <= ruleInstance.distance_max)){
+			if((simulationData.weight_productGr <= ruleInstance.weight_max) && (trackingAPI.distance_total <= ruleInstance.distance_max)){
 	
 				for(Entry<String, RoadwayTrackingResponse_Dto> entry : trackingAPI.trackingRoadway.entrySet()) {
 	
