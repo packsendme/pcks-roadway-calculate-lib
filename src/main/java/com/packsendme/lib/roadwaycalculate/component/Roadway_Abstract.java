@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.packsendme.lib.common.constants.calculador.Calculate_Constants;
 import com.packsendme.lib.common.constants.generic.MetricUnitMeasurement_Constants;
+import com.packsendme.lib.common.constants.way.Roadway_Constants;
 import com.packsendme.lib.common.response.dto.api.GoogleAPITrackingResponse_Dto;
 import com.packsendme.lib.common.response.dto.api.RoadwayTrackingResponse_Dto;
 import com.packsendme.lib.simulation.http.SimulationDataForCalculateRequest_Dto;
@@ -40,11 +41,7 @@ public abstract class Roadway_Abstract implements IRoadway_Costs {
 
 	@Override
 	public RoadwayCalculatorResponse_Dto analyzeRule_data(GoogleAPITrackingResponse_Dto trackingAPI, SimulationDataForCalculateRequest_Dto simulationData, String way) {
-		System.out.println(" ==============================|   analyzeRule_data  |==================================================");
-
 		double total_parcial = 0.0, distance_cost = 0.0, weight_cost = 0.0, duration_cost = 0.0;
-		int numberCountry = 0;
-		
 		RoadwayDataCalculatorResponse_Dto roadwayDataCalculatorObj = new RoadwayDataCalculatorResponse_Dto();
 		RoadwayCalculatorResponse_Dto roadwayResponse = null;
 		
@@ -53,15 +50,9 @@ public abstract class Roadway_Abstract implements IRoadway_Costs {
 			RuleInstance_Model ruleInstance = simulationData.roadwayBRE_cache.ruleInstance.get(way);
 	
 			System.out.println(" ------------------------------- ");
-			System.out.println(" ------------- analyzeRule_data - Roadway_Abstract------------------ "+ way);
 			System.out.println(" ------------- analyzeRule_data - weight_product ------------------ "+ simulationData.weight_product +" "+ ruleInstance.weight_max);
 			System.out.println(" ------------- analyzeRule_data - distance_total------------------ "+ trackingAPI.distance_total +" "+ ruleInstance.distance_max);
 	
-			numberCountry = trackingAPI.trackingRoadway.size();
-			System.out.println(" ------------- analyzeRule_data - Number Country ------------------ "+ numberCountry);
-			System.out.println(" ------------------------------- ");
-	
-			
 			if((simulationData.weight_productGr <= ruleInstance.weight_max) && (trackingAPI.distance_total <= ruleInstance.distance_max)){
 	
 				for(Entry<String, RoadwayTrackingResponse_Dto> entry : trackingAPI.trackingRoadway.entrySet()) {
@@ -72,34 +63,45 @@ public abstract class Roadway_Abstract implements IRoadway_Costs {
 					RuleCosts_Model ruleCostsCache_Model = ruleCosts.get(way);
 	
 					System.out.println(" ");
-					System.out.println(" ------------------------------- ");
-	
-					System.out.println(" ====== COUNTRIES START ========= "+ country);
+					System.out.println(" ==============================|   I N I C I O  |==================================================");
+					System.out.println(" ");
+					System.out.println(" ==============================| Transporte: ================ "+ way);
+					System.out.println(" ==============================| Pais: ================ "+ country);
 	
 					//Calculator Tolls 
-					double tolls_vlr = getTollsCosts(roadwayTrackingAPI_Dto.toll_price, roadwayTrackingAPI_Dto.toll_amount);
+					double tolls_vlr = 0.0;
+					if(way.equals(Roadway_Constants.ROADWAY_TRUCK) || way.equals(Roadway_Constants.ROADWAY_CAR) || way.equals(Roadway_Constants.ROADWAY_MOTORCYCLE)) {
+						tolls_vlr = getTollsCosts(roadwayTrackingAPI_Dto.toll_price, roadwayTrackingAPI_Dto.toll_amount);
+					}
 					
-					//Calculator Fuel 
-					double fuel_vlr = getFuelCosts(roadwayTrackingAPI_Dto.fuel_price,roadwayTrackingAPI_Dto.country_distanceM,
-							ruleCostsCache_Model.average_consumption_cost);
+					//Calculator Fuel (Truck = Diesel / )
+					double fuel_vlr = 0.0;
+					if(way.equals(Roadway_Constants.ROADWAY_TRUCK)) {
+						fuel_vlr = getFuelCosts(roadwayTrackingAPI_Dto.fuelDiesel_price,roadwayTrackingAPI_Dto.country_distanceM,
+								ruleCostsCache_Model.average_consumption_cost);
+					}
+					else {
+						fuel_vlr = getFuelCosts(roadwayTrackingAPI_Dto.fuelGasoline_price,roadwayTrackingAPI_Dto.country_distanceM,
+								ruleCostsCache_Model.average_consumption_cost);
+					}
+
 					vlr_delivery_total =  vlr_delivery_total + tolls_vlr + fuel_vlr;
 
-					System.out.println(" (1) ");
 					distance_cost = ruleCostsCache_Model.distance_cost;
-					System.out.println(" (2) ");
 					weight_cost = weight_cost + ruleCostsCache_Model.weight_cost;
-					System.out.println(" (3) ");
 					duration_cost = duration_cost + ruleCostsCache_Model.worktime_cost;
-					System.out.println(" (4) ");
 
-					roadwayDataCalculatorObj.fuel_total = getTotalRateExchange(fuel_vlr, simulationData);
-					System.out.println(" (5) ");
-					roadwayDataCalculatorObj.tolls_total = getTotalRateExchange(tolls_vlr, simulationData);
-					System.out.println(" (6) ");
+					if(way.equals(Roadway_Constants.ROADWAY_TRUCK) || way.equals(Roadway_Constants.ROADWAY_CAR) || way.equals(Roadway_Constants.ROADWAY_MOTORCYCLE)) {
+						roadwayDataCalculatorObj.fuel_total = getTotalRateExchange(fuel_vlr, simulationData);
+						roadwayDataCalculatorObj.tolls_total = getTotalRateExchange(tolls_vlr, simulationData);
+					}
+					else {
+						roadwayDataCalculatorObj.fuel_total = "0.0";
+						roadwayDataCalculatorObj.tolls_total = "0.0";
+					}
+
 					roadwayDataCalculatorObj.distance = roadwayTrackingAPI_Dto.country_distanceF;
-					System.out.println(" (7) ");
 					roadwayDataCalculator.put(country, roadwayDataCalculatorObj);
-					System.out.println(" (8) ");
 					roadwayDataCalculatorObj = new RoadwayDataCalculatorResponse_Dto();
 					tolls_vlr = 0.00;
 					fuel_vlr = 0.00;
@@ -116,13 +118,15 @@ public abstract class Roadway_Abstract implements IRoadway_Costs {
 				System.out.println(" ");
 				System.out.println(" ==============================|   T O T A L  -  G E R A L  |==================================================");
 				System.out.println(" ");
-				System.out.println(" ========================  analyzeRule_data :: total_parcial ================ "+ total_parcial);
-				System.out.println(" ========================  analyzeRule_data :: EMPLOYER $ ================ "+ vlr_employer_total);
-				System.out.println(" ========================  analyzeRule_data :: DELIVERY $ ================ "+ vlr_delivery_total);
-				System.out.println(" ========================  analyzeRule_data :: PACKSEND $ ================ "+ vlr_packsend_total);
-				System.out.println(" ========================  analyzeRule_data :: RESHIPPING $ ================ "+ vlrReshipping);
-				System.out.println(" ========================  analyzeRule_data :: TOTAL $ ================ "+ vlrTotalDelivery);
+				System.out.println(" ========================  total_parcial ================ "+ total_parcial);
+				System.out.println(" ========================  EMPLOYER $ ================ "+ vlr_employer_total);
+				System.out.println(" ========================  DELIVERY $ ================ "+ vlr_delivery_total);
+				System.out.println(" ========================  PACKSEND $ ================ "+ vlr_packsend_total);
+				System.out.println(" ========================  RESHIPPING $ ================ "+ vlrReshipping);
+				System.out.println(" ========================  TOTAL $ ================ "+ vlrTotalDelivery);
 				System.out.println(" ");
+				System.out.println(" ");
+				System.out.println("========================  F I M ========================");
 				System.out.println(" ");
 
 				roadwayResponse = new RoadwayCalculatorResponse_Dto(
@@ -132,22 +136,11 @@ public abstract class Roadway_Abstract implements IRoadway_Costs {
 						getTotalRateExchange(vlrReshipping, simulationData),
 						getTotalRateExchange(vlrTotalDelivery, simulationData),
 						Calculate_Constants.STATUS_COSTS_SEND);
-				/*
-				roadwayResponse = new RoadwayCalculatorResponse_Dto(
-						getTotalRateExchange(vlr_employer_total, simulationData),
-						getTotalRateExchange(vlr_packsend_total, simulationData),
-						getTotalRateExchange(vlr_delivery_total, simulationData),
-						getTotalRateExchange(vlrReshipping, simulationData),
-						getTotalRateExchange(vlrTotalDelivery, simulationData),
-						Calculate_Constants.STATUS_COSTS_SEND, roadwayDataCalculator);*/
 			}
 			else {
 				roadwayResponse = new RoadwayCalculatorResponse_Dto(
 						Calculate_Constants.VALUE_DEFAUL_S, Calculate_Constants.VALUE_DEFAUL_S, Calculate_Constants.VALUE_DEFAUL_S, 
 						Calculate_Constants.VALUE_DEFAUL_S, Calculate_Constants.VALUE_DEFAUL_S, Calculate_Constants.STATUS_COSTS_NSEND); 
-/*				roadwayResponse = new RoadwayCalculatorResponse_Dto(
-						Calculate_Constants.VALUE_DEFAUL_S, Calculate_Constants.VALUE_DEFAUL_S, Calculate_Constants.VALUE_DEFAUL_S, 
-						Calculate_Constants.VALUE_DEFAUL_S, Calculate_Constants.VALUE_DEFAUL_S, Calculate_Constants.STATUS_COSTS_NSEND, null); */
 			}
 			return roadwayResponse;
 		}
@@ -181,8 +174,6 @@ public abstract class Roadway_Abstract implements IRoadway_Costs {
 	}
 	
 	public String getTotalRateExchange(double total_vlr, SimulationDataForCalculateRequest_Dto simulation) {
-		System.out.println(" ==============================|   getTotalRateExchange  |==================================================");
-
 		try {
 			double totalExchange_vlr = total_vlr * simulation.exchange_rate;
 			System.out.println(" ");
