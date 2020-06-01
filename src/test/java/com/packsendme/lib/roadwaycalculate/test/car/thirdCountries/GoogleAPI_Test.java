@@ -30,22 +30,22 @@ public class GoogleAPI_Test {
 	
 	public RoadwayTrackingResponse_Dto generateRoadwayTracking_Brasil() {
 		//String name_country, int toll_amount, Double toll_price, Double country_distanceF, Double country_distanceM, Double fuel_price, String currency_price, String unity_measurement_distance
-		RoadwayTrackingResponse_Dto roadwayTracking = new RoadwayTrackingResponse_Dto("Brazil", 9, 0.84, 1.435, 1434696.0, 0.83,"KM");
+		RoadwayTrackingResponse_Dto roadwayTracking = new RoadwayTrackingResponse_Dto("Brazil", 9, 0.84, 1.435, 1434696.0, 0.83,0.50);
 		return roadwayTracking;
 	}
 	
 	public RoadwayTrackingResponse_Dto generateRoadwayTracking_Ecuador() {			  
-		RoadwayTrackingResponse_Dto roadwayTracking = new RoadwayTrackingResponse_Dto("Ecuador", 4, 0.84, 699.0, 699436.0, 0.83,"KM");
+		RoadwayTrackingResponse_Dto roadwayTracking = new RoadwayTrackingResponse_Dto("Ecuador", 4, 0.84, 699.0, 699436.0, 0.83,0.50);
 		return roadwayTracking;
 	}
 	
 	public RoadwayTrackingResponse_Dto generateRoadwayTracking_Bolivia() {			  
-		RoadwayTrackingResponse_Dto roadwayTracking = new RoadwayTrackingResponse_Dto("Bolivia", 10, 0.84, 1.579, 1579183.0, 0.83,"KM");
+		RoadwayTrackingResponse_Dto roadwayTracking = new RoadwayTrackingResponse_Dto("Bolivia", 10, 0.84, 1.579, 1579183.0, 0.83,0.50);
 		return roadwayTracking;
 	}	
 	
 	public RoadwayTrackingResponse_Dto generateRoadwayTracking_Peru() {			  
-		RoadwayTrackingResponse_Dto roadwayTracking = new RoadwayTrackingResponse_Dto("Peru", 19, 0.84, 2.491, 2490908.0, 0.83,"KM");
+		RoadwayTrackingResponse_Dto roadwayTracking = new RoadwayTrackingResponse_Dto("Peru", 19, 0.84, 2.491, 2490908.0, 0.83,0.50);
 		return roadwayTracking;
 	}
 		
