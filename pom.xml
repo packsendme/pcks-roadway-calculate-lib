@@ -1,12 +1,12 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.packsendme.lib.calculate</groupId>
-  <artifactId>packsendme-roadwaycalculate-sa-lib</artifactId>
+  <artifactId>pcks-roadway-calculate-lib</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
-  <name>packsendme-roadwaycalculate-sa-lib</name>
+  <name>pcks-roadway-calculate-lib</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -41,7 +41,12 @@
     	<version>2.0.0.RELEASE</version>
 	</dependency>
 
-     
+    <dependency>
+		<groupId>com.packsendme.lib.roadway</groupId>
+		<artifactId>pcks-roadbrewa-roadway-lib</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>		
+	</dependency>
+		
     <dependency>
     	<groupId>org.modelmapper</groupId>
     	<artifactId>modelmapper</artifactId>
@@ -56,8 +61,8 @@
 	</dependency>
 
 	<dependency>
-		<groupId>com.packsendme.lib.entity.simulation</groupId>
-  		<artifactId>packsendme-simulation-lib</artifactId>
+		<groupId>pcks.roadway.lib.simulation</groupId>
+  		<artifactId>pcks-roadway-simulation-lib</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</dependency>
 	

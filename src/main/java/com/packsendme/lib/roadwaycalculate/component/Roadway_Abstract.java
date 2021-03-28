@@ -8,16 +8,12 @@ import org.springframework.stereotype.Component;
 
 import com.packsendme.lib.common.constants.calculador.Calculate_Constants;
 import com.packsendme.lib.common.constants.generic.MetricUnitMeasurement_Constants;
-import com.packsendme.lib.common.constants.way.Roadway_Constants;
 import com.packsendme.lib.common.response.dto.api.GoogleAPITrackingResponse_Dto;
 import com.packsendme.lib.common.response.dto.api.RoadwayTrackingResponse_Dto;
-import com.packsendme.lib.simulation.http.SimulationDataForCalculateRequest_Dto;
-import com.packsendme.lib.simulation.roadway.RoadwayCalculatorResponse_Dto;
+import com.packsendme.lib.roadway.simulation.response.RoadwayCalculatorResponse_Dto;
 import com.packsendme.lib.simulation.roadway.RoadwayDataCalculatorResponse_Dto;
 import com.packsendme.lib.utility.FormatValueMoney;
 import com.packsendme.lib.utility.WeightConvert_Utility;
-import com.packsendme.roadway.bre.rule.costs.model.RuleCosts_Model;
-import com.packsendme.roadway.bre.rule.instance.model.RuleInstance_Model;
 
 @Component
 public abstract class Roadway_Abstract implements IRoadway_Costs {
