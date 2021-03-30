@@ -2,7 +2,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.packsendme.lib.calculate</groupId>
+  <groupId>com.packsendme.lib.roadway</groupId>
   <artifactId>pcks-roadway-calculate-lib</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
@@ -25,7 +25,7 @@
 	
 	<dependency>
 		<groupId>com.packsendme.lib.common</groupId>
-		<artifactId>packsendme-common-lib</artifactId>
+		<artifactId>pcks-common-lib</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</dependency>
 		
@@ -61,7 +61,7 @@
 	</dependency>
 
 	<dependency>
-		<groupId>pcks.roadway.lib.simulation</groupId>
+		<groupId>com.packsendme.lib.roadway</groupId>
   		<artifactId>pcks-roadway-simulation-lib</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</dependency>

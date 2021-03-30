@@ -1,4 +1,4 @@
-package com.packsendme.lib.roadwaycalculate.component;
+package com.packsendme.lib.roadwaycalculate.rules;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,14 +9,44 @@ import java.util.Map.Entry;
 import com.packsendme.lib.common.constants.generic.Fuel_Constants;
 import com.packsendme.lib.common.response.dto.api.GoogleAPITrackingResponse_Dto;
 import com.packsendme.lib.common.response.dto.api.RoadwayTrackingResponse_Dto;
+import com.packsendme.lib.roadway.simulation.request.SimulationRoadwayRequest_Dto;
+import com.packsendme.lib.roadway.simulation.response.SimulationRoadwayResponse;
 import com.packsendme.lib.roadwaycalculate.dto.CalculatorDto;
 import com.packsendme.roadbrewa.entity.Costs;
 import com.packsendme.roadbrewa.entity.Roadway;
 
-public abstract class RoadwayCalculate {
+public abstract class RoadwayRulesCosts {
 	
 
 	// =============== CORE - Calculator =============== // 
+	
+	public Map<String, List<CalculatorDto>> getDistance_Calculator(GoogleAPITrackingResponse_Dto googleAPI_Obj, Roadway roadwayBRE_Obj) {
+		List<CalculatorDto> calculatorDto_L = new ArrayList<CalculatorDto>(); 
+		CalculatorDto calcDto_Obj = null;
+		Map<String, List<CalculatorDto>> distanceCost_M = new HashMap<String, List<CalculatorDto>>();
+	
+		try {
+			for(Entry<String, RoadwayTrackingResponse_Dto> entry : googleAPI_Obj.trackingRoadway.entrySet()) {
+				String country = entry.getKey();
+				RoadwayTrackingResponse_Dto trackingResponseDto = googleAPI_Obj.trackingRoadway.get(country);
+				
+				List<Costs> distanceCountryL = roadwayBRE_Obj.costs.get(country);
+				for(Costs costsObj : distanceCountryL) {
+					calcDto_Obj = new CalculatorDto();
+					calcDto_Obj.name = costsObj.vehicle;
+					calcDto_Obj.value = trackingResponseDto.country_distanceF * costsObj.distance_cost;
+					calculatorDto_L.add(calcDto_Obj);
+				}
+				distanceCost_M.put(country, calculatorDto_L);
+			}
+			return distanceCost_M;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	
 	public Map<String, List<CalculatorDto>> getWeight_Calculator(double weightFrom, GoogleAPITrackingResponse_Dto googleAPI, Roadway roadwayBRE_Obj) {
 		double weightCountry = 0.0;
@@ -63,7 +93,7 @@ public abstract class RoadwayCalculate {
 				calcDto_Obj = new CalculatorDto();
 				RoadwayTrackingResponse_Dto trackingResponseDto = googleAPI_Obj.trackingRoadway.get(country);
 				calcDto_Obj.name = trackingResponseDto.name_country;
-				calcDto_Obj.value = trackingResponseDto.toll_price * trackingResponseDto.toll_amount; 
+				calcDto_Obj.value = trackingResponseDto.toll_amount * trackingResponseDto.toll_price; 
 				calculatorDto_L.add(calcDto_Obj);
 				tollsCost_M.put(country, calculatorDto_L);
 			}
@@ -188,65 +218,6 @@ public abstract class RoadwayCalculate {
 		}
 	}
 	
-	// =============== TOTAL - RISK =============== // 
-	
-	public double getFragile_Calculator(Double costTotal_Core, Roadway roadwayBRE_Obj) {
-		try {
-			return (costTotal_Core * roadwayBRE_Obj.fragile_cost) / 100;
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			return 0.0;
-		}
-	}
-
-	public double getPersishable_Calculator(Double costTotal_Core, Roadway roadwayBRE_Obj) {
-		try {
-			return (costTotal_Core * roadwayBRE_Obj.persishable_cost) / 100; 
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			return 0.0;
-		}
-	}
-
-	// =============== TOTAL - Calculator =============== // 
-
-	public double getEmployee_Calculator(double costTotal_Core, Roadway roadwayBRE_Obj) {
-		try {
-			double vlr_employee = (costTotal_Core * roadwayBRE_Obj.employeer_cost) / 100;
-			return vlr_employee;
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			return 0.0;
-		}
-	}
-	
-	public double getOperationOwner_Calculator(double costTotal_Core, Roadway roadwayBRE_Obj) {
-		try {
-			double vlr_operation = (costTotal_Core * roadwayBRE_Obj.operation_cost) / 100;
-			return vlr_operation;
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			return 0.0;
-		}
-	}
-	
-
-	public double getReshippingCosts(double costTotal_Core, Roadway roadwayBRE_Obj) {
-		try {
-			double vlr_reshipping = (costTotal_Core * roadwayBRE_Obj.reshipping_cost) / 100;
-			return vlr_reshipping;
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			return 0.0;
-		}
-	}
-
-
-	abstract public double calculatorProccess();
+	abstract public SimulationRoadwayResponse instanceRulesCosts(GoogleAPITrackingResponse_Dto googleAPI, Roadway roadwayBRE, SimulationRoadwayRequest_Dto requestData);
 
 }
