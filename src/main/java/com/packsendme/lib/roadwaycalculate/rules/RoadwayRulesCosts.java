@@ -218,6 +218,6 @@ public abstract class RoadwayRulesCosts {
 		}
 	}
 	
-	abstract public SimulationRoadwayResponse instanceRulesCosts(GoogleAPITrackingResponse_Dto googleAPI, Roadway roadwayBRE, SimulationRoadwayRequest_Dto requestData);
+	abstract public SimulationRoadwayResponse instanceRulesCosts(SimulationRoadwayRequest_Dto requestData);
 
 }

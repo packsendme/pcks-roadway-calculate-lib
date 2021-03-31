@@ -78,8 +78,8 @@ public class TotalImpl implements ITotal {
 	@Override
 	public String getExchange_Total(SimulationRoadwayRequest_Dto simulationDto, double vlr_total) {
 		try {
-			double vlr_exchange = vlr_total * simulationDto.rate_exchange;
-			return valueFormatObj.formatDoubleStringInCurrency(vlr_exchange,simulationDto.language_exchange, simulationDto.country_exchange);
+			double vlr_exchange = vlr_total * simulationDto.exchangeObj.value;
+			return valueFormatObj.formatDoubleStringInCurrency(vlr_exchange,simulationDto.language_locale, simulationDto.country_locale);
 		}
 		catch (Exception e) {
 			e.printStackTrace();

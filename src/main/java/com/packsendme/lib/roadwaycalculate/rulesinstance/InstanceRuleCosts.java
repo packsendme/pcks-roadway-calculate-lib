@@ -8,7 +8,6 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
-import com.packsendme.lib.common.response.dto.api.GoogleAPITrackingResponse_Dto;
 import com.packsendme.lib.roadway.simulation.request.SimulationRoadwayRequest_Dto;
 import com.packsendme.lib.roadway.simulation.response.CostsRoadway;
 import com.packsendme.lib.roadway.simulation.response.SimulationRoadwayResponse;
@@ -32,33 +31,32 @@ public class InstanceRuleCosts extends RoadwayRulesCosts{
 	
 	
 	@Override
-	public SimulationRoadwayResponse instanceRulesCosts(GoogleAPITrackingResponse_Dto googleAPI, Roadway roadwayBRE,
-			SimulationRoadwayRequest_Dto requestData) {
+	public SimulationRoadwayResponse instanceRulesCosts(SimulationRoadwayRequest_Dto requestData) {
 		
-		if(roadwayBRE.tariffPlan.weight_plan == true) {
-			weightCost_M = this.getWeight_Calculator(requestData.weight_max, googleAPI, roadwayBRE);
+		if(requestData.roadwayRule.tariffPlan.weight_plan == true) {
+			weightCost_M = this.getWeight_Calculator(requestData.weight_max, requestData.googleTracking, requestData.roadwayRule);
 		}
-		if(roadwayBRE.tariffPlan.distance_plan == true) {
-			distanceCost_M = this.getDistance_Calculator(googleAPI, roadwayBRE);
+		if(requestData.roadwayRule.tariffPlan.distance_plan == true) {
+			distanceCost_M = this.getDistance_Calculator(requestData.googleTracking, requestData.roadwayRule);
 		}
-		if(roadwayBRE.tariffPlan.worktime_plan == true) {
-			worktimeCost_M = this.getWorktime_Calculator(googleAPI, roadwayBRE);
+		if(requestData.roadwayRule.tariffPlan.worktime_plan == true) {
+			worktimeCost_M = this.getWorktime_Calculator(requestData.googleTracking, requestData.roadwayRule);
 		}
-		if(roadwayBRE.tariffPlan.fuelconsumption_plan == true) {
-			fuelConsumptionCost_M = this.getFuelConsumption_Calculator(googleAPI, roadwayBRE);
+		if(requestData.roadwayRule.tariffPlan.fuelconsumption_plan == true) {
+			fuelConsumptionCost_M = this.getFuelConsumption_Calculator(requestData.googleTracking, requestData.roadwayRule);
 		}
-		if(roadwayBRE.tariffPlan.tolls_plan == true) {
-			tollsCost_M = this.getTolls_Calculator(googleAPI);
+		if(requestData.roadwayRule.tariffPlan.tolls_plan == true) {
+			tollsCost_M = this.getTolls_Calculator(requestData.googleTracking);
 		}
-		if(roadwayBRE.tariffPlan.dimension_plan == true) {
+		if(requestData.roadwayRule.tariffPlan.dimension_plan == true) {
 			dimensionCost_M = this.getDimension_Calculator(requestData.height_max, requestData.width_max, requestData.length_max, 
-					googleAPI, roadwayBRE);
+					requestData.googleTracking, requestData.roadwayRule);
 		}
-		if(roadwayBRE.tariffPlan.antt_plan == true) {
+		if(requestData.roadwayRule.tariffPlan.antt_plan == true) {
 			
 		}
 		
-		calcTotalCostsRoadway(roadwayBRE,requestData);
+		calcTotalCostsRoadway(requestData.roadwayRule,requestData);
  		return null;
 	}
 	
@@ -108,7 +106,7 @@ public class InstanceRuleCosts extends RoadwayRulesCosts{
 			
 			CostsRoadway costsVehicleObj = new CostsRoadway(vehicle, df2.format(vlr_weight), df2.format(vlr_dimension), df2.format(vlr_distance), df2.format(vlr_worktime),
 					df2.format(vlr_tolls), df2.format(vlr_fuelconsumption), df2.format(vlr_fragile), df2.format(vlr_persishable), df2.format(vlr_reshipping),
-					vlr_operationOwnerS, vlr_employeerS, requestData.currency_exchange, df2.format(cost_total_US), cost_total_EX);
+					vlr_operationOwnerS, vlr_employeerS, df2.format(cost_total_US), cost_total_EX, requestData.exchangeObj.toCurrent);
 			costsVehicle_L.add(costsVehicleObj);
 		}
 		simulationRoadwayResponse_Dto = new SimulationRoadwayResponse(requestData, costsVehicle_L, new Date());
