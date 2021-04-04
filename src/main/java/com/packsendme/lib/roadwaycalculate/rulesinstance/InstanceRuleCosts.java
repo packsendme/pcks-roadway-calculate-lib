@@ -102,7 +102,27 @@ public class InstanceRuleCosts extends RoadwayRulesCosts{
 			String vlr_operationOwnerS = totalObj.getExchange_Total(requestData, vlr_operationOwner);
 			String vlr_employeerS = totalObj.getExchange_Total(requestData, vlr_employeer);
 			String cost_total_EX = totalObj.getExchange_Total(requestData, cost_total_US);
-			
+
+			System.out.println(" ");
+			System.out.println("---------------------------------------");
+			System.out.println("--- calcTotalCostsRoadway_ START ------ ");
+			System.out.println("--- calcTotalCostsRoadway_ VEICULO ------ "+ vehicle);
+			System.out.println(" - calcTotalCostsRoadway: totalCostsCore ---- "+ totalCostsCore);
+			System.out.println(" - calcTotalCostsRoadway: vlr_fragile ---- "+ vlr_fragile);
+			System.out.println(" - calcTotalCostsRoadway: vlr_persishable ---- "+ vlr_persishable);
+			System.out.println(" - calcTotalCostsRoadway: vlr_reshipping ---- "+ vlr_reshipping);
+			System.out.println(" - calcTotalCostsRoadway: vlr_operationOwner ---- "+ vlr_operationOwner);
+			System.out.println(" ");
+			System.out.println(" - calcTotalCostsRoadway: cost_total_US ---- "+ cost_total_US);
+			System.out.println(" ");
+			System.out.println(" - calcTotalCostsRoadway: vlr_operationOwnerS ---- "+ vlr_operationOwnerS);
+			System.out.println(" - calcTotalCostsRoadway: vlr_employeerS ---- "+ vlr_employeerS);
+			System.out.println(" ");
+			System.out.println(" ");
+			System.out.println(" - calcTotalCostsRoadway: cost_total_EX ---- "+ cost_total_EX);
+			System.out.println(" ");
+			System.out.println("---------------------------------------");
+
 			
 			CostsRoadway costsVehicleObj = new CostsRoadway(vehicle, df2.format(vlr_weight), df2.format(vlr_dimension), df2.format(vlr_distance), df2.format(vlr_worktime),
 					df2.format(vlr_tolls), df2.format(vlr_fuelconsumption), df2.format(vlr_fragile), df2.format(vlr_persishable), df2.format(vlr_reshipping),

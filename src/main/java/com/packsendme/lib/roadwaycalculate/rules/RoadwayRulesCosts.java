@@ -24,21 +24,35 @@ public abstract class RoadwayRulesCosts {
 		List<CalculatorDto> calculatorDto_L = new ArrayList<CalculatorDto>(); 
 		CalculatorDto calcDto_Obj = null;
 		Map<String, List<CalculatorDto>> distanceCost_M = new HashMap<String, List<CalculatorDto>>();
+		System.out.println("---------------------------------------");
+		System.out.println(" - getDistance_Calculator: START ---- ");
 	
 		try {
 			for(Entry<String, RoadwayTrackingResponse_Dto> entry : googleAPI_Obj.trackingRoadway.entrySet()) {
 				String country = entry.getKey();
 				RoadwayTrackingResponse_Dto trackingResponseDto = googleAPI_Obj.trackingRoadway.get(country);
 				
+				System.out.println(" - getDistance_Calculator: Country ---- "+ country);
+				
 				List<Costs> distanceCountryL = roadwayBRE_Obj.costs.get(country);
+				System.out.println(" - getDistance_Calculator: LIST-Country ---- "+ distanceCountryL.size());
+
 				for(Costs costsObj : distanceCountryL) {
 					calcDto_Obj = new CalculatorDto();
 					calcDto_Obj.name = costsObj.vehicle;
 					calcDto_Obj.value = trackingResponseDto.country_distanceF * costsObj.distance_cost;
 					calculatorDto_L.add(calcDto_Obj);
+					
+					System.out.println(" - getDistance_Calculator: VEICULO ---- "+ calcDto_Obj.name);
+					System.out.println(" - getDistance_Calculator: VALOR ---- "+ calcDto_Obj.value);
+
 				}
 				distanceCost_M.put(country, calculatorDto_L);
 			}
+			System.out.println(" - getDistance_Calculator: FIM "+ distanceCost_M.size());
+			System.out.println("---------------------------------------");
+			System.out.println("");
+
 			return distanceCost_M;
 		}
 		catch (Exception e) {
@@ -53,9 +67,17 @@ public abstract class RoadwayRulesCosts {
 		
 		Map<String, List<CalculatorDto>> weightCost_M = new HashMap<String, List<CalculatorDto>>();
 		List<CalculatorDto> calculatorDto_L = new ArrayList<CalculatorDto>(); 
+		
+		System.out.println("---------------------------------------");
+		System.out.println(" - getWeight_Calculator: START ---- ");
+
+		
 		try {
 			for(Entry<String, List<Costs>> entry : roadwayBRE_Obj.costs.entrySet()) {
 				String country = entry.getKey();
+				
+				System.out.println(" - getWeight_Calculator: Country ---- "+ country);
+
 	
 				// Check more country in tracking : If YES divid Weight for distance by country current
 				if(googleAPI.trackingRoadway.size() > 1) {
@@ -67,14 +89,25 @@ public abstract class RoadwayRulesCosts {
 				}
 				
 				List<Costs> weightCountryL = roadwayBRE_Obj.costs.get(country);
+				System.out.println(" - getWeight_Calculator: LIST-Country ---- "+ weightCountryL.size());
+
 				for(Costs costsObj : weightCountryL) {
 					CalculatorDto calcDto_Obj = new CalculatorDto();
 					calcDto_Obj.name = costsObj.vehicle;
 					calcDto_Obj.value = weightCountry * costsObj.weight_cost;
 					calculatorDto_L.add(calcDto_Obj);
+				
+					System.out.println(" - getWeight_Calculator: VEICULO ---- "+ calcDto_Obj.name);
+					System.out.println(" - getWeight_Calculator: VALOR ---- "+ calcDto_Obj.value);
+
 				}
 				weightCost_M.put(country, calculatorDto_L);
 			}
+			
+			System.out.println(" - getWeight_Calculator: FIM "+ weightCost_M.size());
+			System.out.println("---------------------------------------");
+			System.out.println("");
+
 			return weightCost_M;
 		}
 		catch (Exception e) {
@@ -87,16 +120,32 @@ public abstract class RoadwayRulesCosts {
 		List<CalculatorDto> calculatorDto_L = new ArrayList<CalculatorDto>(); 
 		CalculatorDto calcDto_Obj = null;
 		Map<String, List<CalculatorDto>> tollsCost_M = new HashMap<String, List<CalculatorDto>>();
+		
+		System.out.println("---------------------------------------");
+		System.out.println(" - getTolls_Calculator: START ---- ");
+
 		try {
 			for(Entry<String, RoadwayTrackingResponse_Dto> entry : googleAPI_Obj.trackingRoadway.entrySet()) {
 				String country = entry.getKey();
 				calcDto_Obj = new CalculatorDto();
+				
+				System.out.println(" - getTolls_Calculator: Country ---- "+ country);
+
 				RoadwayTrackingResponse_Dto trackingResponseDto = googleAPI_Obj.trackingRoadway.get(country);
 				calcDto_Obj.name = trackingResponseDto.name_country;
 				calcDto_Obj.value = trackingResponseDto.toll_amount * trackingResponseDto.toll_price; 
+				
+				System.out.println(" - getTolls_Calculator: VEICULO ---- "+ calcDto_Obj.name);
+				System.out.println(" - getTolls_Calculator: VALOR ---- "+ calcDto_Obj.value);
+
 				calculatorDto_L.add(calcDto_Obj);
 				tollsCost_M.put(country, calculatorDto_L);
 			}
+			
+			System.out.println(" - getWeight_Calculator: FIM "+ tollsCost_M.size());
+			System.out.println("---------------------------------------");
+			System.out.println("");
+
 			return tollsCost_M;
 		}
 		catch (Exception e) {
@@ -114,10 +163,17 @@ public abstract class RoadwayRulesCosts {
 		
 		Map<String, List<CalculatorDto>> dimensionCost_M = new HashMap<String, List<CalculatorDto>>();
 		List<CalculatorDto> calculatorDto_L = new ArrayList<CalculatorDto>(); 
+		
+		System.out.println("---------------------------------------");
+		System.out.println(" - getDimension_Calculator: START ---- ");
+
 		try {
 			for(Entry<String, List<Costs>> entry : roadwayBRE_Obj.costs.entrySet()) {
 				String country = entry.getKey();
 				dimensionCountry = 0.0;
+				
+				System.out.println(" - getDimension_Calculator: Country ---- "+ country);
+
 				// Check more country in tracking : If YES divid Weight for distance by country current
 				if(googleAPI.trackingRoadway.size() > 1) {
 					RoadwayTrackingResponse_Dto trackingResponseDto = googleAPI.trackingRoadway.get(country);
@@ -142,11 +198,20 @@ public abstract class RoadwayRulesCosts {
 					CalculatorDto calcDto_Obj = new CalculatorDto();
 					calcDto_Obj.name = costsObj.vehicle;
 					dimensionCountry = (heightDimension * costsObj.heightDimension_cost) + (widthDimension * costsObj.widthDimension_cost) + (lengthDimension * costsObj.lengthDimension_cost); 
+					
+					System.out.println(" - getDimension_Calculator: VEICULO ---- "+ calcDto_Obj.name);
+					System.out.println(" - getDimension_Calculator: VALOR ---- "+ dimensionCountry);
+
 					calcDto_Obj.value = dimensionCountry;
 					calculatorDto_L.add(calcDto_Obj);
 				}
 				dimensionCost_M.put(country, calculatorDto_L);
 			}
+			
+			System.out.println(" - dimensionCost_M: FIM "+ dimensionCost_M.size());
+			System.out.println("---------------------------------------");
+			System.out.println("");
+
 			return dimensionCost_M;
 		}
 		catch (Exception e) {
@@ -162,6 +227,9 @@ public abstract class RoadwayRulesCosts {
 		CalculatorDto calcDto_Obj = null;
 		Map<String, List<CalculatorDto>> worktimeCost_M = new HashMap<String, List<CalculatorDto>>();
 
+		System.out.println("---------------------------------------");
+		System.out.println(" - getWorktime_Calculator: START ---- ");
+
 		try {
 			double durationByCountry = googleAPI_Obj.duration / googleAPI_Obj.trackingRoadway.size();
 			for(Entry<String, RoadwayTrackingResponse_Dto> entry : googleAPI_Obj.trackingRoadway.entrySet()) {
@@ -173,10 +241,19 @@ public abstract class RoadwayRulesCosts {
 					calcDto_Obj = new CalculatorDto();
 					calcDto_Obj.name = costsObj.vehicle;
 					calcDto_Obj.value = (durationByCountry / 60) * costsObj.worktime_cost;
+
+					System.out.println(" - getWorktime_Calculator: VEICULO ---- "+ calcDto_Obj.name);
+					System.out.println(" - getWorktime_Calculator: VALOR ---- "+ calcDto_Obj.value);
+					
 					calculatorDto_L.add(calcDto_Obj);
 				}
 				worktimeCost_M.put(country, calculatorDto_L);
 			}
+			
+			System.out.println(" - getWorktime_Calculator: FIM "+ worktimeCost_M.size());
+			System.out.println("---------------------------------------");
+			System.out.println("");
+
 			return worktimeCost_M;
 		}
 		catch (Exception e) {
@@ -190,6 +267,9 @@ public abstract class RoadwayRulesCosts {
 		CalculatorDto calcDto_Obj = null;
 		Map<String, List<CalculatorDto>> fuelCost_M = new HashMap<String, List<CalculatorDto>>();
 	
+		System.out.println("---------------------------------------");
+		System.out.println(" - getFuelConsumption_Calculator: START ---- ");
+
 		try {
 				for(Entry<String, RoadwayTrackingResponse_Dto> entry : googleAPI_Obj.trackingRoadway.entrySet()) {
 					String country = entry.getKey();
@@ -202,6 +282,9 @@ public abstract class RoadwayRulesCosts {
 						calcDto_Obj.name = costsObj.vehicle;
 						if((costsObj.fuel_type.equals(Fuel_Constants.GAS_FUEL)) || (costsObj.fuel_type.equals(Fuel_Constants.FLEX_FUEL))) {
 							calcDto_Obj.value = (trackingResponseDto.country_distanceF / costsObj.average_consumption_cost) * trackingResponseDto.fuelGasoline_price; 
+							System.out.println(" - getFuelConsumption_Calculator: VEICULO ---- "+ calcDto_Obj.name);
+							System.out.println(" - getFuelConsumption_Calculator: VALOR ---- "+ calcDto_Obj.value);
+
 						}
 						else if(costsObj.fuel_type.equals(Fuel_Constants.DIESEL_FUEL)) {
 							calcDto_Obj.value = (trackingResponseDto.country_distanceF / costsObj.average_consumption_cost) * trackingResponseDto.fuelDiesel_price; 
@@ -210,6 +293,11 @@ public abstract class RoadwayRulesCosts {
 					}
 					fuelCost_M.put(country, calculatorDto_L);
 				}
+				
+				System.out.println(" - getFuelConsumption_Calculator: FIM "+ fuelCost_M.size());
+				System.out.println("---------------------------------------");
+				System.out.println("");
+
 				return fuelCost_M;
 		}
 		catch (Exception e) {
