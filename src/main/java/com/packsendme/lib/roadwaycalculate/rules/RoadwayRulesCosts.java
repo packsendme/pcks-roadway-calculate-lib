@@ -35,7 +35,7 @@ public abstract class RoadwayRulesCosts {
 				System.out.println(" - getDistance_Calculator: Country ---- "+ country);
 				
 				List<Costs> distanceCountryL = roadwayBRE_Obj.costs.get(country);
-				System.out.println(" - getDistance_Calculator: LIST-Country ---- "+ distanceCountryL.size());
+				System.out.println(" - getDistance_Calculator: LIST ---- "+ distanceCountryL.size());
 
 				for(Costs costsObj : distanceCountryL) {
 					calcDto_Obj = new CalculatorDto();
