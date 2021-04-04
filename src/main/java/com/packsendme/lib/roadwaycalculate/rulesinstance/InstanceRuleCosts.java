@@ -34,36 +34,29 @@ public class InstanceRuleCosts extends RoadwayRulesCosts{
 	public SimulationRoadwayResponse instanceRulesCosts(SimulationRoadwayRequest_Dto requestData) {
 		
 		if(requestData.roadwayRule.tariffPlan.weight_plan == true) {
-			Roadway roadwayRuleWeight = requestData.roadwayRule;
-			weightCost_M = this.getWeight_Calculator(requestData.weight_max, requestData.googleTracking, roadwayRuleWeight);
+			weightCost_M = this.getWeight_Calculator(requestData.weight_max, requestData.googleTracking, requestData.roadwayRule);
 		}
 		if(requestData.roadwayRule.tariffPlan.distance_plan == true) {
-			Roadway roadwayRuleDistance = requestData.roadwayRule;
-			System.out.println(" ++ instanceRulesCosts ++ "+ roadwayRuleDistance.costs.size());
-			distanceCost_M = this.getDistance_Calculator(requestData.googleTracking, roadwayRuleDistance);
+			distanceCost_M = this.getDistance_Calculator(requestData.googleTracking, requestData.roadwayRule);
 		}
 		if(requestData.roadwayRule.tariffPlan.worktime_plan == true) {
-			Roadway roadwayRuleWorkTime = requestData.roadwayRule;
-			worktimeCost_M = this.getWorktime_Calculator(requestData.googleTracking, roadwayRuleWorkTime);
+			worktimeCost_M = this.getWorktime_Calculator(requestData.googleTracking, requestData.roadwayRule);
 		}
 		if(requestData.roadwayRule.tariffPlan.fuelconsumption_plan == true) {
-			Roadway roadwayRuleFuelCons = requestData.roadwayRule;
-			fuelConsumptionCost_M = this.getFuelConsumption_Calculator(requestData.googleTracking, roadwayRuleFuelCons);
+			fuelConsumptionCost_M = this.getFuelConsumption_Calculator(requestData.googleTracking, requestData.roadwayRule);
 		}
 		if(requestData.roadwayRule.tariffPlan.tolls_plan == true) {
 			tollsCost_M = this.getTolls_Calculator(requestData.googleTracking);
 		}
 		if(requestData.roadwayRule.tariffPlan.dimension_plan == true) {
-			Roadway roadwayRuleDiemnsion = requestData.roadwayRule;
 			dimensionCost_M = this.getDimension_Calculator(requestData.height_max, requestData.width_max, requestData.length_max, 
-					requestData.googleTracking, roadwayRuleDiemnsion);
+					requestData.googleTracking, requestData.roadwayRule);
 		}
 		if(requestData.roadwayRule.tariffPlan.antt_plan == true) {
 			
 		}
-		
-		calcTotalCostsRoadway(requestData.roadwayRule,requestData);
- 		return null;
+		SimulationRoadwayResponse simulationResulObj =  calcTotalCostsRoadway(requestData.roadwayRule,requestData);
+ 		return simulationResulObj;
 	}
 	
 	private SimulationRoadwayResponse calcTotalCostsRoadway(Roadway roadwayBRE_Obj, SimulationRoadwayRequest_Dto requestData) {
