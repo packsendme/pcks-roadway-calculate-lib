@@ -39,6 +39,7 @@ public class InstanceRuleCosts extends RoadwayRulesCosts{
 		}
 		if(requestData.roadwayRule.tariffPlan.distance_plan == true) {
 			Roadway roadwayRuleDistance = requestData.roadwayRule;
+			System.out.println(" ++ instanceRulesCosts ++ "+ roadwayRuleDistance.costs.size());
 			distanceCost_M = this.getDistance_Calculator(requestData.googleTracking, roadwayRuleDistance);
 		}
 		if(requestData.roadwayRule.tariffPlan.worktime_plan == true) {
