@@ -64,10 +64,9 @@ public class TotalImpl implements ITotal {
 	}
 
 	@Override
-	public double getCosts_Total(double totalCostsCore, double vlr_fragile, double vlr_persishable,
-			double vlr_reshipping, double vlr_operationOwner, double vlr_employeer) {
+	public double getCosts_Total(double totalCostsBase, double totalCostsRisk, double vlr_operationOwner, double vlr_employeer) {
 		try {
-			return (totalCostsCore+vlr_fragile+vlr_persishable+vlr_reshipping+vlr_operationOwner+vlr_employeer);
+			return (totalCostsBase+totalCostsRisk+vlr_operationOwner+vlr_employeer);
 		}
 		catch (Exception e) {
 			e.printStackTrace();

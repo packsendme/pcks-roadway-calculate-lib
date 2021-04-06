@@ -79,40 +79,45 @@ public class InstanceRuleCosts extends RoadwayRulesCosts{
 		}
 		
 		for (String vehicle : vehicleCheckRule) {
-			// Core-Costs 
+
+			// BaseCosts 
 			double vlr_weight = vehicleAggregationObj.weightVehicleCosts(vehicle, weightCost_M);
 			double vlr_dimension = vehicleAggregationObj.dimensionVehicleCosts(vehicle, dimensionCost_M);
 			double vlr_distance = vehicleAggregationObj.distanceVehicleCosts(vehicle, distanceCost_M);
 			double vlr_worktime = vehicleAggregationObj.worktimeVehicleCosts(vehicle, worktimeCost_M);
 			double vlr_tolls = vehicleAggregationObj.tollsVehicleCosts(tollsCost_M);
 			double vlr_fuelconsumption = vehicleAggregationObj.fuelConsumptionVehicleCosts(vehicle, fuelConsumptionCost_M);
+			double cost_total_base = vlr_weight + vlr_dimension + vlr_distance + vlr_worktime + vlr_tolls + vlr_fuelconsumption; 
 
-			// Total-Costs
-			double totalCostsCore = vlr_weight + vlr_dimension + vlr_distance + vlr_worktime + vlr_tolls + vlr_fuelconsumption;
-			double vlr_fragile = totalObj.getFragileVlr_Total(totalCostsCore, roadwayBRE_Obj);	
-			double vlr_persishable = totalObj.getPersishableVlr_Total(totalCostsCore, roadwayBRE_Obj);	
-			double vlr_reshipping = totalObj.getReshippingVlr_Total(totalCostsCore, roadwayBRE_Obj);	
+			// RiskCosts
+			double vlr_fragile = totalObj.getFragileVlr_Total(cost_total_base, roadwayBRE_Obj);	
+			double vlr_persishable = totalObj.getPersishableVlr_Total(cost_total_base, roadwayBRE_Obj);	
+			double cost_total_risk = vlr_fragile + vlr_persishable;
+					
+			// TotalGeneral-Costs
+			double vlr_reshipping = totalObj.getReshippingVlr_Total(cost_total_base, roadwayBRE_Obj);	
+			double vlr_operationOwner = totalObj.getOperationOwner_Total(cost_total_base, roadwayBRE_Obj);
+			double vlr_employeer = totalObj.getEmployeeVlr_Total(cost_total_base, roadwayBRE_Obj);
+			double cost_total_US = totalObj.getCosts_Total(cost_total_base, cost_total_risk, vlr_operationOwner, vlr_employeer);
 			
-			double vlr_operationOwner = totalObj.getOperationOwner_Total(totalCostsCore, roadwayBRE_Obj);
-			double vlr_employeer = totalObj.getEmployeeVlr_Total(totalCostsCore, roadwayBRE_Obj);
-			double cost_total_US = totalObj.getCosts_Total(totalCostsCore, vlr_fragile, vlr_persishable, vlr_reshipping, vlr_operationOwner, vlr_employeer);
 			
-			
-			
-				
-			// Exchange Currency-Rate
-
+			// Exchange BaseCosts 
 			String vlr_weightS = totalObj.getExchange_Total(requestData,vlr_weight);
 			String vlr_dimensionS = totalObj.getExchange_Total(requestData,vlr_dimension);
 			String vlr_distanceS = totalObj.getExchange_Total(requestData,vlr_distance);
 			String vlr_worktimeS = totalObj.getExchange_Total(requestData,vlr_worktime);
 			String vlr_tollsS = totalObj.getExchange_Total(requestData,vlr_tolls);
 			String vlr_fuelconsumptionS = totalObj.getExchange_Total(requestData,vlr_fuelconsumption);
+			String cost_total_baseS = totalObj.getExchange_Total(requestData, cost_total_base); 
+			
+			// Exchange RiskCosts 
 			String vlr_fragileS = totalObj.getExchange_Total(requestData,vlr_fragile);	
-			String vlr_persishableS = totalObj.getExchange_Total(requestData,vlr_persishable);	
-			String vlr_reshippingS = totalObj.getExchange_Total(requestData,vlr_reshipping);	
+			String vlr_persishableS = totalObj.getExchange_Total(requestData,vlr_persishable);
+			String cost_total_riskS = totalObj.getExchange_Total(requestData,cost_total_risk);;
+
 			
 			// Total
+			String vlr_reshippingS = totalObj.getExchange_Total(requestData,vlr_reshipping);	
 			String vlr_operationOwnerS =  totalObj.getExchange_Total(requestData,vlr_operationOwner);
 			String vlr_employeerS = totalObj.getExchange_Total(requestData, vlr_employeer);
 			String cost_total_EX = totalObj.getExchange_Total(requestData, cost_total_US);
@@ -121,7 +126,7 @@ public class InstanceRuleCosts extends RoadwayRulesCosts{
 			System.out.println("---------------------------------------");
 			System.out.println("--- calcTotalCostsRoadway_ START ------ ");
 			System.out.println("--- calcTotalCostsRoadway_ VEICULO ------ "+ vehicle);
-			System.out.println(" - calcTotalCostsRoadway: totalCostsCore ---- "+ totalCostsCore);
+			System.out.println(" - calcTotalCostsRoadway: totalCostsCore ---- "+ cost_total_base);
 			System.out.println(" - calcTotalCostsRoadway: vlr_fragile ---- "+ vlr_fragile);
 			System.out.println(" - calcTotalCostsRoadway: vlr_persishable ---- "+ vlr_persishable);
 			System.out.println(" - calcTotalCostsRoadway: vlr_reshipping ---- "+ vlr_reshipping);
@@ -139,11 +144,11 @@ public class InstanceRuleCosts extends RoadwayRulesCosts{
 
 			
 			CostsRoadway costsVehicleObj = new CostsRoadway(vehicle, vlr_weightS, vlr_dimensionS, vlr_distanceS, vlr_worktimeS,
-					vlr_tollsS, vlr_fuelconsumptionS, vlr_fragileS, vlr_persishableS, vlr_reshippingS,
+					vlr_tollsS, vlr_fuelconsumptionS, cost_total_baseS, vlr_fragileS, vlr_persishableS, cost_total_riskS, vlr_reshippingS,
 					vlr_operationOwnerS, vlr_employeerS, df2.format(cost_total_US), cost_total_EX, requestData.exchangeObj.toCurrent);
 			costsVehicle_L.add(costsVehicleObj);
 		}
-		simulationRoadwayResponse_Dto = new SimulationRoadwayResponse(requestData, costsVehicle_L, new Date());
+		simulationRoadwayResponse_Dto = new SimulationRoadwayResponse(requestData, requestData.googleTracking, costsVehicle_L, new Date());
 		return simulationRoadwayResponse_Dto;
 	}
 
