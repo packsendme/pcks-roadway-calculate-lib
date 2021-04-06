@@ -96,9 +96,24 @@ public class InstanceRuleCosts extends RoadwayRulesCosts{
 			double vlr_operationOwner = totalObj.getOperationOwner_Total(totalCostsCore, roadwayBRE_Obj);
 			double vlr_employeer = totalObj.getEmployeeVlr_Total(totalCostsCore, roadwayBRE_Obj);
 			double cost_total_US = totalObj.getCosts_Total(totalCostsCore, vlr_fragile, vlr_persishable, vlr_reshipping, vlr_operationOwner, vlr_employeer);
+			
+			
+			
 				
 			// Exchange Currency-Rate
-			String vlr_operationOwnerS = totalObj.getExchange_Total(requestData, vlr_operationOwner);
+
+			String vlr_weightS = totalObj.getExchange_Total(requestData,vlr_weight);
+			String vlr_dimensionS = totalObj.getExchange_Total(requestData,vlr_dimension);
+			String vlr_distanceS = totalObj.getExchange_Total(requestData,vlr_distance);
+			String vlr_worktimeS = totalObj.getExchange_Total(requestData,vlr_worktime);
+			String vlr_tollsS = totalObj.getExchange_Total(requestData,vlr_tolls);
+			String vlr_fuelconsumptionS = totalObj.getExchange_Total(requestData,vlr_fuelconsumption);
+			String vlr_fragileS = totalObj.getExchange_Total(requestData,vlr_fragile);	
+			String vlr_persishableS = totalObj.getExchange_Total(requestData,vlr_persishable);	
+			String vlr_reshippingS = totalObj.getExchange_Total(requestData,vlr_reshipping);	
+			
+			// Total
+			String vlr_operationOwnerS =  totalObj.getExchange_Total(requestData,vlr_operationOwner);
 			String vlr_employeerS = totalObj.getExchange_Total(requestData, vlr_employeer);
 			String cost_total_EX = totalObj.getExchange_Total(requestData, cost_total_US);
 
@@ -123,8 +138,8 @@ public class InstanceRuleCosts extends RoadwayRulesCosts{
 			System.out.println("---------------------------------------");
 
 			
-			CostsRoadway costsVehicleObj = new CostsRoadway(vehicle, df2.format(vlr_weight), df2.format(vlr_dimension), df2.format(vlr_distance), df2.format(vlr_worktime),
-					df2.format(vlr_tolls), df2.format(vlr_fuelconsumption), df2.format(vlr_fragile), df2.format(vlr_persishable), df2.format(vlr_reshipping),
+			CostsRoadway costsVehicleObj = new CostsRoadway(vehicle, vlr_weightS, vlr_dimensionS, vlr_distanceS, vlr_worktimeS,
+					vlr_tollsS, vlr_fuelconsumptionS, vlr_fragileS, vlr_persishableS, vlr_reshippingS,
 					vlr_operationOwnerS, vlr_employeerS, df2.format(cost_total_US), cost_total_EX, requestData.exchangeObj.toCurrent);
 			costsVehicle_L.add(costsVehicleObj);
 		}
