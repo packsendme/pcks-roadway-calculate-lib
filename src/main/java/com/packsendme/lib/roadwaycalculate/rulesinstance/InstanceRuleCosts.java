@@ -145,13 +145,10 @@ public class InstanceRuleCosts extends RoadwayRulesCosts{
 			
 			CostsRoadway costsVehicleObj = new CostsRoadway(vehicle, vlr_weightS, vlr_dimensionS, vlr_distanceS, vlr_worktimeS,
 					vlr_tollsS, vlr_fuelconsumptionS, cost_total_baseS, vlr_fragileS, vlr_persishableS, cost_total_riskS, vlr_reshippingS,
-					vlr_operationOwnerS, vlr_employeerS, df2.format(cost_total_US), cost_total_EX, requestData.exchangeObj.toCurrent);
+					vlr_operationOwnerS, vlr_employeerS, requestData.exchangeObj.toCurrent, df2.format(cost_total_US), cost_total_EX);
 			costsVehicle_L.add(costsVehicleObj);
 		}
 		simulationRoadwayResponse_Dto = new SimulationRoadwayResponse(requestData, requestData.googleTracking, costsVehicle_L, new Date());
 		return simulationRoadwayResponse_Dto;
 	}
-
- 
-
 }
