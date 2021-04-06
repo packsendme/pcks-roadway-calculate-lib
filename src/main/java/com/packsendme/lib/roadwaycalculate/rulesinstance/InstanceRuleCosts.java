@@ -122,6 +122,7 @@ public class InstanceRuleCosts extends RoadwayRulesCosts{
 			String vlr_employeerS = totalObj.getExchange_Total(requestData, vlr_employeer);
 			String cost_total_EX = totalObj.getExchange_Total(requestData, cost_total_US);
 
+			
 			System.out.println(" ");
 			System.out.println("---------------------------------------");
 			System.out.println("--- calcTotalCostsRoadway_ START ------ ");
@@ -140,6 +141,7 @@ public class InstanceRuleCosts extends RoadwayRulesCosts{
 			System.out.println(" ");
 			System.out.println(" - calcTotalCostsRoadway: cost_total_EX ---- "+ cost_total_EX);
 			System.out.println(" ");
+			System.out.println(" ");
 			System.out.println("---------------------------------------");
 
 			
@@ -148,7 +150,22 @@ public class InstanceRuleCosts extends RoadwayRulesCosts{
 					vlr_operationOwnerS, vlr_employeerS, requestData.exchangeObj.toCurrent, df2.format(cost_total_US), cost_total_EX);
 			costsVehicle_L.add(costsVehicleObj);
 		}
-		simulationRoadwayResponse_Dto = new SimulationRoadwayResponse(requestData, requestData.googleTracking, costsVehicle_L, new Date());
+	
+		// Return Tolls-Total
+		int tollsTotal_CountryAll = totalObj.getTolls_Amount(requestData.googleTracking);
+		int durantion_CountryAll = requestData.googleTracking.duration / 60;
+		String distance_CountryAll = df2.format(requestData.googleTracking.distance_total);
+
+		System.out.println(" ");
+		System.out.println("---------------------------------------");
+		System.out.println(" RESPONSE HTTP ---- ");
+		System.out.println(" - TOLLS: TOTAL ---- "+ tollsTotal_CountryAll);
+		System.out.println(" - DURANTION: TOTAL ---- "+ durantion_CountryAll);
+		System.out.println(" - DISTANCE: TOTAL ---- "+ df2.format(distance_CountryAll));
+		System.out.println("---------------------------------------");
+		System.out.println(" ");
+
+		simulationRoadwayResponse_Dto = new SimulationRoadwayResponse(distance_CountryAll,durantion_CountryAll,tollsTotal_CountryAll,requestData, costsVehicle_L, new Date());
 		return simulationRoadwayResponse_Dto;
 	}
 }

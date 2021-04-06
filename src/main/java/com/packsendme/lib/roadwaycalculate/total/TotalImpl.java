@@ -1,6 +1,11 @@
 package com.packsendme.lib.roadwaycalculate.total;
 
+import java.util.Map.Entry;
+
+import com.packsendme.lib.common.response.dto.api.GoogleAPITrackingResponse_Dto;
+import com.packsendme.lib.common.response.dto.api.RoadwayTrackingResponse_Dto;
 import com.packsendme.lib.roadway.simulation.request.SimulationRoadwayRequest_Dto;
+import com.packsendme.lib.roadwaycalculate.dto.CalculatorDto;
 import com.packsendme.lib.utility.FormatValueMoney;
 import com.packsendme.roadbrewa.entity.Roadway;
 
@@ -83,6 +88,23 @@ public class TotalImpl implements ITotal {
 		catch (Exception e) {
 			e.printStackTrace();
 			return "0.0";
+		}
+	}
+
+	@Override
+	public int getTolls_Amount(GoogleAPITrackingResponse_Dto googleAPI_Obj) {
+		int tollsTotal = 0;
+		try {
+			for(Entry<String, RoadwayTrackingResponse_Dto> entry : googleAPI_Obj.trackingRoadway.entrySet()) {
+				String country = entry.getKey();
+				RoadwayTrackingResponse_Dto trackingResponseDto = googleAPI_Obj.trackingRoadway.get(country);
+				tollsTotal = tollsTotal + trackingResponseDto.toll_amount; 
+			}
+			return tollsTotal;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return 0;
 		}
 	}
 
