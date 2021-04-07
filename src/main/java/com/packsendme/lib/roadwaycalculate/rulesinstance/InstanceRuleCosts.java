@@ -77,6 +77,9 @@ public class InstanceRuleCosts extends RoadwayRulesCosts{
 				System.out.println("--- WEIGHT_MAX  BRE ------ "+ vehObj.weight_max);
 				System.out.println("--- WEIGHT_MAX  REQ ------ "+ requestData.weight_max);
 				System.out.println("");
+				System.out.println("--- HEIGHT_MAX  BRE ------ "+ vehObj.height_dimension_max);
+				System.out.println("--- HEIGHT_MAX  REQ ------ "+ requestData.height_max);
+				System.out.println("");
 				System.out.println("--- WIDTH_MAX  BRE ------ "+ vehObj.width_dimension_max);
 				System.out.println("--- WIDTH_MAX  REQ ------ "+ requestData.width_max);
 				System.out.println("");
@@ -87,12 +90,12 @@ public class InstanceRuleCosts extends RoadwayRulesCosts{
 				
 				
 				if((vehObj.weight_max >= requestData.weight_max) && (vehObj.height_dimension_max >= requestData.weight_max) 
-					&&(vehObj.width_dimension_max >= requestData.width_max) &&(vehObj.length_dimension_max >= requestData.length_max)) {
+					&& (vehObj.width_dimension_max >= requestData.width_max) &&(vehObj.length_dimension_max >= requestData.length_max)) {
 					vehicleCheckRule.add(vehObj.category_vehicle);
 					
 					System.out.println("");
 					System.out.println("---------------------------------------");
-					System.out.println(" VEHICLE "+ vehObj.category_vehicle);
+					System.out.println(" ENTROU "+ vehObj.category_vehicle);
 					System.out.println("---------------------------------------");
 					System.out.println("");
 				}
