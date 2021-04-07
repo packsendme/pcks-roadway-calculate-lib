@@ -71,13 +71,38 @@ public class InstanceRuleCosts extends RoadwayRulesCosts{
 		// Check vehicle based on rules
 		for (Category catObj : roadwayBRE_Obj.categories) {
 			for (Vehicle vehObj : catObj.vehicles) {
+
+				System.out.println("");
+				System.out.println("---------------------------------------");
+				System.out.println("--- WEIGHT_MAX  BRE ------ "+ vehObj.weight_max);
+				System.out.println("--- WEIGHT_MAX  REQ ------ "+ requestData.weight_max);
+				System.out.println("");
+				System.out.println("--- WIDTH_MAX  BRE ------ "+ vehObj.width_dimension_max);
+				System.out.println("--- WIDTH_MAX  REQ ------ "+ requestData.width_max);
+				System.out.println("");
+				System.out.println("--- LENGTH_MAX  BRE ------ "+ vehObj.length_dimension_max);
+				System.out.println("--- LENGTH_MAX  REQ ------ "+ requestData.length_max);
+				System.out.println("---------------------------------------");
+				System.out.println("");
+				
+				
 				if((vehObj.weight_max >= requestData.weight_max) && (vehObj.height_dimension_max >= requestData.weight_max) 
 					&&(vehObj.width_dimension_max >= requestData.width_max) &&(vehObj.length_dimension_max >= requestData.length_max)) {
 					vehicleCheckRule.add(vehObj.category_vehicle);
+					
+					System.out.println("");
+					System.out.println("---------------------------------------");
+					System.out.println(" VEHICLE "+ vehObj.category_vehicle);
+					System.out.println("---------------------------------------");
+					System.out.println("");
 				}
 			}
 		}
-		
+
+		System.out.println("---------------------------------------");
+		System.out.println(" VEHICLE "+ vehicleCheckRule.size());
+		System.out.println("---------------------------------------");
+
 		for (String vehicle : vehicleCheckRule) {
 
 			// BaseCosts 
@@ -156,12 +181,14 @@ public class InstanceRuleCosts extends RoadwayRulesCosts{
 		int durantion_CountryAll = requestData.googleTracking.duration / 60;
 		//String distance_CountryAll = df2.format(requestData.googleTracking.distance_total);
 
+		
 		System.out.println(" ");
 		System.out.println("---------------------------------------");
 		System.out.println(" RESPONSE HTTP ---- ");
 		System.out.println(" - TOLLS: TOTAL ---- "+ tollsTotal_CountryAll);
 		System.out.println(" - DURANTION: TOTAL ---- "+ durantion_CountryAll);
 		System.out.println(" - DISTANCE: TOTAL ---- "+ requestData.googleTracking.distance_total);
+		System.out.println(" - COSTSVEHICLE ---- "+ costsVehicle_L.size());
 		System.out.println("---------------------------------------");
 		System.out.println(" ");
 
