@@ -34,7 +34,7 @@ public class InstanceRuleCosts extends RoadwayRulesCosts{
 	public SimulationRoadwayResponse instanceRulesCosts(SimulationRoadwayRequest_Dto requestData) {
 		
 		if(requestData.roadwayRule.tariffPlan.weight_plan == true) {
-			weightCost_M = this.getWeight_Calculator(requestData.weight_max, requestData.googleTracking, requestData.roadwayRule);
+			weightCost_M = this.getWeight_Calculator(requestData.weight_max, requestData.unity_weight, requestData.googleTracking, requestData.roadwayRule);
 		}
 		if(requestData.roadwayRule.tariffPlan.distance_plan == true) {
 			distanceCost_M = this.getDistance_Calculator(requestData.googleTracking, requestData.roadwayRule);
