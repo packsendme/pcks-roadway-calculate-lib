@@ -89,7 +89,7 @@ public class InstanceRuleCosts extends RoadwayRulesCosts{
 				System.out.println("");
 				
 				
-				if((vehObj.weight_max >= requestData.weight_max) && (vehObj.height_dimension_max >= requestData.weight_max) 
+				if((vehObj.weight_max >= requestData.weight_max) && (vehObj.height_dimension_max >= requestData.height_max) 
 					&& (vehObj.width_dimension_max >= requestData.width_max) &&(vehObj.length_dimension_max >= requestData.length_max)) {
 					vehicleCheckRule.add(vehObj.category_vehicle);
 					
