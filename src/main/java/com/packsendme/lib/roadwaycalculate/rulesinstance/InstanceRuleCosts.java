@@ -181,21 +181,19 @@ public class InstanceRuleCosts extends RoadwayRulesCosts{
 	
 		// Return Tolls-Total
 		int tollsTotal_CountryAll = totalObj.getTolls_Amount(requestData.googleTracking);
-		int durantion_CountryAll = requestData.googleTracking.duration / 60;
-		//String distance_CountryAll = df2.format(requestData.googleTracking.distance_total);
 
 		
 		System.out.println(" ");
 		System.out.println("---------------------------------------");
 		System.out.println(" RESPONSE HTTP ---- ");
 		System.out.println(" - TOLLS: TOTAL ---- "+ tollsTotal_CountryAll);
-		System.out.println(" - DURANTION: TOTAL ---- "+ durantion_CountryAll);
-		System.out.println(" - DISTANCE: TOTAL ---- "+ requestData.googleTracking.distance_total);
+		System.out.println(" - DURANTION: TOTAL ---- "+ requestData.googleTracking.durationF);
+		System.out.println(" - DISTANCE: TOTAL ---- "+ requestData.googleTracking.distanceF);
 		System.out.println(" - COSTSVEHICLE ---- "+ costsVehicle_L.size());
 		System.out.println("---------------------------------------");
 		System.out.println(" ");
 
-		simulationRoadwayResponse_Dto = new SimulationRoadwayResponse(requestData.googleTracking.distance_total,durantion_CountryAll,tollsTotal_CountryAll,null, costsVehicle_L, new Date());
+		simulationRoadwayResponse_Dto = new SimulationRoadwayResponse(requestData.googleTracking.distanceF,requestData.googleTracking.durationF,tollsTotal_CountryAll,null, costsVehicle_L, new Date());
 		return simulationRoadwayResponse_Dto;
 	}
 }
