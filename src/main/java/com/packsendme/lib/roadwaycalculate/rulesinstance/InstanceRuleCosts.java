@@ -112,6 +112,14 @@ public class InstanceRuleCosts extends RoadwayRulesCosts{
 				
 				if((vehObj.weight_max >= requestData.weight_max) && (vehObj.height_dimension_max >= requestData.height_max) 
 					&& (vehObj.width_dimension_max >= requestData.width_max) &&(vehObj.length_dimension_max >= requestData.length_max)) {
+
+					System.out.println("");
+					System.out.println("---------------------------------------");
+					System.out.println(" ENTROU 1-IF "+ vehObj.restriction );
+					System.out.println(" ENTROU 2-IF "+ vehObj.distance_max);
+					System.out.println(" ENTROU 3-IF "+ requestData.googleTracking.distance_total);
+					System.out.println("---------------------------------------");
+
 					
 					if ((vehObj.restriction == true) && (vehObj.distance_max < requestData.googleTracking.distance_total)) {
 						vehicleCheckRule.add(vehObj.category_vehicle);
