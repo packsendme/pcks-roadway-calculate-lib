@@ -295,6 +295,15 @@ public abstract class RoadwayRulesCosts {
 						calcDto_Obj = new CalculatorDto();
 						calcDto_Obj.name = costsObj.vehicle;
 						if((costsObj.fuel_type.equals(Fuel_Constants.GAS_FUEL)) || (costsObj.fuel_type.equals(Fuel_Constants.FLEX_FUEL))) {
+							
+							System.out.println(" ");
+							System.out.println("---------------------------------------");
+							System.out.println(" - getFuelConsumption_Calculator: country_distanceF ---- "+ trackingResponseDto.country_distanceF);
+							System.out.println(" - getFuelConsumption_Calculator: average_consumption_cost ---- "+ costsObj.average_consumption_cost);
+							System.out.println(" - getFuelConsumption_Calculator: fuelGasoline_price ---- "+ trackingResponseDto.fuelGasoline_price);
+							System.out.println("---------------------------------------");
+
+							
 							calcDto_Obj.value = (trackingResponseDto.country_distanceF / costsObj.average_consumption_cost) * trackingResponseDto.fuelGasoline_price; 
 							System.out.println(" - getFuelConsumption_Calculator: VEICULO ---- "+ calcDto_Obj.name);
 							System.out.println(" - getFuelConsumption_Calculator: VALOR ---- "+ calcDto_Obj.value);
