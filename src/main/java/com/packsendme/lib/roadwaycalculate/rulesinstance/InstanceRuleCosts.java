@@ -34,6 +34,22 @@ public class InstanceRuleCosts extends RoadwayRulesCosts{
 	public SimulationRoadwayResponse instanceRulesCosts(SimulationRoadwayRequest_Dto requestData) {
 		
 		if(requestData.roadwayRule.tariffPlan.weight_plan == true) {
+			if(requestData.weight_max == 0.0) {
+				requestData.weight_max = requestData.roadwayRule.transport.weight_max;
+				String unityWeightS = null;
+				if(requestData.roadwayRule.transport.unity_weight.get(0) != null) {
+					unityWeightS = requestData.roadwayRule.transport.unity_weight.get(0);
+					requestData.unity_weight = unityWeightS;
+				}
+				else if(requestData.roadwayRule.transport.unity_weight.get(1) != null) {
+					unityWeightS = requestData.roadwayRule.transport.unity_weight.get(1);	
+					requestData.unity_weight = unityWeightS;
+				}
+				else if(requestData.roadwayRule.transport.unity_weight.get(2) != null) {
+					unityWeightS = requestData.roadwayRule.transport.unity_weight.get(2);
+					requestData.unity_weight = unityWeightS;
+				}
+			}
 			weightCost_M = this.getWeight_Calculator(requestData.weight_max, requestData.unity_weight, requestData.googleTracking, requestData.roadwayRule);
 		}
 		if(requestData.roadwayRule.tariffPlan.distance_plan == true) {
@@ -49,6 +65,11 @@ public class InstanceRuleCosts extends RoadwayRulesCosts{
 			tollsCost_M = this.getTolls_Calculator(requestData.googleTracking);
 		}
 		if(requestData.roadwayRule.tariffPlan.dimension_plan == true) {
+			if((requestData.height_max == 0.0) && (requestData.length_max == 0.0) && (requestData.width_max == 0.0)) {
+				requestData.height_max = requestData.roadwayRule.transport.heightDimension_max;
+				requestData.width_max = requestData.roadwayRule.transport.widthDimension_max;
+				requestData.length_max = requestData.roadwayRule.transport.lengthDimension_max;
+			}
 			dimensionCost_M = this.getDimension_Calculator(requestData.height_max, requestData.width_max, requestData.length_max, 
 					requestData.googleTracking, requestData.roadwayRule);
 		}
@@ -91,13 +112,23 @@ public class InstanceRuleCosts extends RoadwayRulesCosts{
 				
 				if((vehObj.weight_max >= requestData.weight_max) && (vehObj.height_dimension_max >= requestData.height_max) 
 					&& (vehObj.width_dimension_max >= requestData.width_max) &&(vehObj.length_dimension_max >= requestData.length_max)) {
-					vehicleCheckRule.add(vehObj.category_vehicle);
 					
-					System.out.println("");
-					System.out.println("---------------------------------------");
-					System.out.println(" ENTROU "+ vehObj.category_vehicle);
-					System.out.println("---------------------------------------");
-					System.out.println("");
+					if ((vehObj.restriction == true) && (vehObj.distance_max < requestData.googleTracking.distance_total)) {
+						vehicleCheckRule.add(vehObj.category_vehicle);
+						System.out.println("");
+						System.out.println("---------------------------------------");
+						System.out.println(" ENTROU "+ vehObj.category_vehicle);
+						System.out.println("---------------------------------------");
+						System.out.println("");
+					}
+					else if (vehObj.restriction == false) {
+						vehicleCheckRule.add(vehObj.category_vehicle);
+						System.out.println("");
+						System.out.println("---------------------------------------");
+						System.out.println(" ENTROU "+ vehObj.category_vehicle);
+						System.out.println("---------------------------------------");
+						System.out.println("");
+					} 
 				}
 			}
 		}
