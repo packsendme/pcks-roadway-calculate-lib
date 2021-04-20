@@ -86,7 +86,7 @@ public class InstanceRuleCosts extends RoadwayRulesCosts{
 		VehicleAggregationCostsImpl vehicleAggregationObj = new VehicleAggregationCostsImpl();
 		TotalImpl totalObj = new TotalImpl();
 		List<CostsRoadway> costsVehicle_L = new ArrayList<CostsRoadway>();
-		
+		boolean statusVehiculoUnity = false;
 		List<String> vehicleCheckRule = new ArrayList<String>();
 		
 		// Check vehicle based on rules
@@ -125,8 +125,16 @@ public class InstanceRuleCosts extends RoadwayRulesCosts{
 				System.out.println("---------------------------------------");
 				System.out.println("");
 				
-				
-				if((weightUnity_Vehicle >= weightUnity_Load) && (vehObj.weight_max >= requestData.weight_max)) {
+
+				// Validation type vehicle Unity Measured. (GR / KG / T)  
+				if((weightUnity_Vehicle == weightUnity_Load) && (vehObj.weight_max >= requestData.weight_max)) {
+					statusVehiculoUnity = true;
+				}
+				else if(weightUnity_Vehicle > weightUnity_Load) {
+					statusVehiculoUnity = true;
+				}
+						
+				if(statusVehiculoUnity == true) {
 					if((vehObj.height_dimension_max >= requestData.height_max) && (vehObj.width_dimension_max >= requestData.width_max) 
 							&&(vehObj.length_dimension_max >= requestData.length_max)) {
 						
