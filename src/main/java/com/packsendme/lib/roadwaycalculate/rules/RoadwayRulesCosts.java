@@ -38,17 +38,12 @@ public abstract class RoadwayRulesCosts {
 				List<Costs> distanceCountryL = roadwayBRE_Obj.costs.get(country);
 				System.out.println(" - getDistance_Calculator: LIST ---- "+ distanceCountryL.size());
 				System.out.println(" - getDistance_Calculator: country_distanceF ---- "+ trackingResponseDto.country_distanceF);
-				Double x = trackingResponseDto.country_distanceF;
-				System.out.println(" - getDistance_Calculator: country_distanceF ---- "+ x);
-
 
 				for(Costs costsObj : distanceCountryL) {
 					calcDto_Obj = new CalculatorDto();
 					calcDto_Obj.name = costsObj.vehicle;
-
 					calcDto_Obj.value = trackingResponseDto.country_distanceF * costsObj.distance_cost;
 					calculatorDto_L.add(calcDto_Obj);
-					
 					System.out.println(" - getDistance_Calculator: VEICULO ---- "+ calcDto_Obj.name);
 					System.out.println(" - getDistance_Calculator: VALOR ---- "+ calcDto_Obj.value);
 
