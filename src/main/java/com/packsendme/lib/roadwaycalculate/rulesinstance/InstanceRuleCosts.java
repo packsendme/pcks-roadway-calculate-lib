@@ -111,6 +111,7 @@ public class InstanceRuleCosts extends RoadwayRulesCosts{
 				
 				System.out.println("---------------------------------------");
 				System.out.println("UNITY WEIGHT");
+				
 				int weightUnity_Vehicle = 0;
 				for(Entry<Integer, String> entry : vehObj.unity_weight.entrySet()) {
 					weightUnity_Vehicle = entry.getKey();
@@ -118,10 +119,19 @@ public class InstanceRuleCosts extends RoadwayRulesCosts{
 				}
 				
 				int weightUnity_Load = 0;
-				for(Entry<Integer, String> entry : requestData.unity_weight.entrySet()) {
-					weightUnity_Load = entry.getKey();
-					System.out.println(" UNIDADE MEDIDA CARGA"+ weightUnity_Load);
+				if(requestData.roadwayRule.transport.restriction == false) {
+					for(Entry<Integer, String> entry : requestData.unity_weight.entrySet()) {
+						weightUnity_Load = entry.getKey();
+						System.out.println(" UNIDADE MEDIDA CARGA"+ weightUnity_Load);
+					}
 				}
+				else if(requestData.roadwayRule.transport.restriction == true) {
+					for(Entry<Integer, String> entry : requestData.roadwayRule.transport.unity_weight.entrySet()) {
+						weightUnity_Load = entry.getKey();
+						System.out.println(" UNIDADE MEDIDA CARGA"+ weightUnity_Load);
+					}
+				}
+					
 				System.out.println("---------------------------------------");
 				System.out.println("");
 				
