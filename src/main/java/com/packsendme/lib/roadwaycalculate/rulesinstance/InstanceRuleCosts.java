@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.springframework.stereotype.Component;
 
@@ -15,6 +16,7 @@ import com.packsendme.lib.roadwaycalculate.dto.CalculatorDto;
 import com.packsendme.lib.roadwaycalculate.rules.RoadwayRulesCosts;
 import com.packsendme.lib.roadwaycalculate.rules.VehicleAggregationCostsImpl;
 import com.packsendme.lib.roadwaycalculate.total.TotalImpl;
+import com.packsendme.lib.roadwaycalculate.utility.CalculateUtility;
 import com.packsendme.roadbrewa.entity.Category;
 import com.packsendme.roadbrewa.entity.Roadway;
 import com.packsendme.roadbrewa.entity.Vehicle;
@@ -29,6 +31,7 @@ public class InstanceRuleCosts extends RoadwayRulesCosts{
 	private Map<String, List<CalculatorDto>> tollsCost_M = null;
 	private Map<String, List<CalculatorDto>> dimensionCost_M = null;
 	
+	CalculateUtility weightConvertObj = new CalculateUtility();
 	
 	@Override
 	public SimulationRoadwayResponse instanceRulesCosts(SimulationRoadwayRequest_Dto requestData) {
@@ -36,34 +39,29 @@ public class InstanceRuleCosts extends RoadwayRulesCosts{
 		if(requestData.roadwayRule.tariffPlan.weight_plan == true) {
 			if(requestData.weight_max == 0.0) {
 				requestData.weight_max = requestData.roadwayRule.transport.weight_max;
-				String unityWeightS = null;
-				if(requestData.roadwayRule.transport.unity_weight.get(0) != null) {
-					unityWeightS = requestData.roadwayRule.transport.unity_weight.get(0);
-					requestData.unity_weight = unityWeightS;
-				}
-				else if(requestData.roadwayRule.transport.unity_weight.get(1) != null) {
-					unityWeightS = requestData.roadwayRule.transport.unity_weight.get(1);	
-					requestData.unity_weight = unityWeightS;
-				}
-				else if(requestData.roadwayRule.transport.unity_weight.get(2) != null) {
-					unityWeightS = requestData.roadwayRule.transport.unity_weight.get(2);
-					requestData.unity_weight = unityWeightS;
-				}
+				weightCost_M = this.getWeight_Calculator(requestData.weight_max, requestData.roadwayRule.transport.unity_weight, requestData.googleTracking, requestData.roadwayRule);
 			}
-			weightCost_M = this.getWeight_Calculator(requestData.weight_max, requestData.unity_weight, requestData.googleTracking, requestData.roadwayRule);
+			else {
+				weightCost_M = this.getWeight_Calculator(requestData.weight_max, requestData.unity_weight, requestData.googleTracking, requestData.roadwayRule);
+			}
 		}
+		
 		if(requestData.roadwayRule.tariffPlan.distance_plan == true) {
 			distanceCost_M = this.getDistance_Calculator(requestData.googleTracking, requestData.roadwayRule);
 		}
+		
 		if(requestData.roadwayRule.tariffPlan.worktime_plan == true) {
 			worktimeCost_M = this.getWorktime_Calculator(requestData.googleTracking, requestData.roadwayRule);
 		}
+		
 		if(requestData.roadwayRule.tariffPlan.fuelconsumption_plan == true) {
 			fuelConsumptionCost_M = this.getFuelConsumption_Calculator(requestData.googleTracking, requestData.roadwayRule);
 		}
+		
 		if(requestData.roadwayRule.tariffPlan.tolls_plan == true) {
 			tollsCost_M = this.getTolls_Calculator(requestData.googleTracking);
 		}
+		
 		if(requestData.roadwayRule.tariffPlan.dimension_plan == true) {
 			if((requestData.height_max == 0.0) && (requestData.length_max == 0.0) && (requestData.width_max == 0.0)) {
 				requestData.height_max = requestData.roadwayRule.transport.heightDimension_max;
@@ -73,9 +71,11 @@ public class InstanceRuleCosts extends RoadwayRulesCosts{
 			dimensionCost_M = this.getDimension_Calculator(requestData.height_max, requestData.width_max, requestData.length_max, 
 					requestData.googleTracking, requestData.roadwayRule);
 		}
+		
 		if(requestData.roadwayRule.tariffPlan.antt_plan == true) {
 			
 		}
+		
 		SimulationRoadwayResponse simulationResulObj =  calcTotalCostsRoadway(requestData.roadwayRule,requestData);
  		return simulationResulObj;
 	}
@@ -109,38 +109,57 @@ public class InstanceRuleCosts extends RoadwayRulesCosts{
 				System.out.println("---------------------------------------");
 				System.out.println("");
 				
+				System.out.println("---------------------------------------");
+				System.out.println("UNITY WEIGHT");
+				int weightUnity_Vehicle = 0;
+				for(Entry<Integer, String> entry : requestData.roadwayRule.transport.unity_weight.entrySet()) {
+					weightUnity_Vehicle = entry.getKey();
+					System.out.println(" UNIDADE MEDIDA VEICULO"+ weightUnity_Vehicle);
+				}
 				
-				if((vehObj.weight_max >= requestData.weight_max) && (vehObj.height_dimension_max >= requestData.height_max) 
-					&& (vehObj.width_dimension_max >= requestData.width_max) &&(vehObj.length_dimension_max >= requestData.length_max)) {
+				int weightUnity_Load = 0;
+				for(Entry<Integer, String> entry : requestData.unity_weight.entrySet()) {
+					weightUnity_Load = entry.getKey();
+					System.out.println(" UNIDADE MEDIDA CARGA"+ weightUnity_Load);
+				}
+				System.out.println("---------------------------------------");
+				System.out.println("");
+				
+				
+				if((weightUnity_Vehicle >= weightUnity_Load) && (vehObj.weight_max >= requestData.weight_max)) {
+					if((vehObj.height_dimension_max >= requestData.height_max) && (vehObj.width_dimension_max >= requestData.width_max) 
+							&&(vehObj.length_dimension_max >= requestData.length_max)) {
+						
+						System.out.println("");
+						System.out.println("---------------------------------------");
+						System.out.println(" ENTROU 1-IF "+ vehObj.restriction );
+						System.out.println(" ENTROU 2-IF "+ vehObj.distance_max);
+						System.out.println(" ENTROU 3-IF "+ requestData.googleTracking.distance_total);
+						System.out.println("---------------------------------------");
 
-					System.out.println("");
-					System.out.println("---------------------------------------");
-					System.out.println(" ENTROU 1-IF "+ vehObj.restriction );
-					System.out.println(" ENTROU 2-IF "+ vehObj.distance_max);
-					System.out.println(" ENTROU 3-IF "+ requestData.googleTracking.distance_total);
-					System.out.println("---------------------------------------");
-
+						
+						if ((vehObj.restriction == true) && (requestData.googleTracking.distance_total < vehObj.distance_max)) {
+							vehicleCheckRule.add(vehObj.category_vehicle);
+							System.out.println("");
+							System.out.println("---------------------------------------");
+							System.out.println(" ENTROU "+ vehObj.category_vehicle);
+							System.out.println("---------------------------------------");
+							System.out.println("");
+						}
+						else if (vehObj.restriction == false) {
+							vehicleCheckRule.add(vehObj.category_vehicle);
+							System.out.println("");
+							System.out.println("---------------------------------------");
+							System.out.println(" ENTROU "+ vehObj.category_vehicle);
+							System.out.println("---------------------------------------");
+							System.out.println("");
+						}
 					
-					if ((vehObj.restriction == true) && (requestData.googleTracking.distance_total < vehObj.distance_max)) {
-						vehicleCheckRule.add(vehObj.category_vehicle);
-						System.out.println("");
-						System.out.println("---------------------------------------");
-						System.out.println(" ENTROU "+ vehObj.category_vehicle);
-						System.out.println("---------------------------------------");
-						System.out.println("");
 					}
-					else if (vehObj.restriction == false) {
-						vehicleCheckRule.add(vehObj.category_vehicle);
-						System.out.println("");
-						System.out.println("---------------------------------------");
-						System.out.println(" ENTROU "+ vehObj.category_vehicle);
-						System.out.println("---------------------------------------");
-						System.out.println("");
-					} 
 				}
 			}
 		}
-
+						
 		System.out.println("---------------------------------------");
 		System.out.println(" VEHICLE "+ vehicleCheckRule.size());
 		System.out.println("---------------------------------------");

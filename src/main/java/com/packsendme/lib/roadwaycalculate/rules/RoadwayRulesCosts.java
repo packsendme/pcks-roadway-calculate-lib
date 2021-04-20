@@ -7,13 +7,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import com.packsendme.lib.common.constants.generic.Fuel_Constants;
-import com.packsendme.lib.common.constants.generic.MetricUnitMeasurement_Constants;
 import com.packsendme.lib.common.response.dto.api.GoogleAPITrackingResponse_Dto;
 import com.packsendme.lib.common.response.dto.api.RoadwayTrackingResponse_Dto;
 import com.packsendme.lib.roadway.simulation.request.SimulationRoadwayRequest_Dto;
 import com.packsendme.lib.roadway.simulation.response.SimulationRoadwayResponse;
 import com.packsendme.lib.roadwaycalculate.dto.CalculatorDto;
-import com.packsendme.lib.utility.WeightConvert_Utility;
+import com.packsendme.lib.roadwaycalculate.utility.CalculateUtility;
 import com.packsendme.roadbrewa.entity.Costs;
 import com.packsendme.roadbrewa.entity.Roadway;
 
@@ -64,10 +63,10 @@ public abstract class RoadwayRulesCosts {
 	}
 
 	
-	public Map<String, List<CalculatorDto>> getWeight_Calculator(double weightFrom, String measured_unit, GoogleAPITrackingResponse_Dto googleAPI, Roadway roadwayBRE_Obj) {
+	public Map<String, List<CalculatorDto>> getWeight_Calculator(Double weightFrom, Map<Integer, String> unity_weight, GoogleAPITrackingResponse_Dto googleAPI, Roadway roadwayBRE_Obj) {
 		double weightCountry = 0.0;
 		double weightFormat_vlr = 0.0;
-		WeightConvert_Utility weightConvert = new WeightConvert_Utility();
+		CalculateUtility weightConvert = new CalculateUtility();
 		
 		Map<String, List<CalculatorDto>> weightCost_M = new HashMap<String, List<CalculatorDto>>();
 		List<CalculatorDto> calculatorDto_L = new ArrayList<CalculatorDto>(); 
@@ -78,17 +77,7 @@ public abstract class RoadwayRulesCosts {
 		
 		try {
 			// Conversion Unit Measurement
-			if(measured_unit.equals(MetricUnitMeasurement_Constants.grama_UnitMeasurement)) {
-				weightCountry = weightFrom;
-			}
-			else if(measured_unit.equals(MetricUnitMeasurement_Constants.kilograma_UnitMeasurement)) {
-				weightFormat_vlr = weightConvert.kilogramoToGrama(weightFrom);
-				weightCountry = weightFormat_vlr / 100;
-			}
-			else if(measured_unit.equals(MetricUnitMeasurement_Constants.tonelada_UnitMeasurement)) {
-				weightFormat_vlr = weightConvert.ToneladaToGrama(weightFrom);
-				weightCountry = weightFormat_vlr / 1000;
-			}   
+			weightCountry = weightConvert.getAnalizeUnityWeight(weightFrom, unity_weight);
 			
 			for(Entry<String, List<Costs>> entry : roadwayBRE_Obj.costs.entrySet()) {
 				String country = entry.getKey();
