@@ -272,6 +272,7 @@ public abstract class RoadwayRulesCosts {
 		List<CalculatorDto> calculatorDto_L = new ArrayList<CalculatorDto>(); 
 		CalculatorDto calcDto_Obj = null;
 		Map<String, List<CalculatorDto>> fuelCost_M = new HashMap<String, List<CalculatorDto>>();
+		Double vlr_default = 0.00;
 	
 		System.out.println("---------------------------------------");
 		System.out.println(" - getFuelConsumption_Calculator: START ---- ");
@@ -304,6 +305,10 @@ public abstract class RoadwayRulesCosts {
 						else if(costsObj.fuel_type.equals(Fuel_Constants.DIESEL_FUEL)) {
 							calcDto_Obj.value = (trackingResponseDto.country_distanceF / costsObj.average_consumption_cost) * trackingResponseDto.fuelDiesel_price; 
 						}
+						else if(costsObj.fuel_type.equals(Fuel_Constants.ELECTRIC_FUEL)) {
+							calcDto_Obj.value = vlr_default; 
+						}
+						
 						calculatorDto_L.add(calcDto_Obj);
 					}
 					fuelCost_M.put(country, calculatorDto_L);
