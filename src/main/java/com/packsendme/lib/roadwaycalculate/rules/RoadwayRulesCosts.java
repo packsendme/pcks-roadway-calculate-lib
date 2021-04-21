@@ -73,11 +73,14 @@ public abstract class RoadwayRulesCosts {
 		
 		System.out.println("---------------------------------------");
 		System.out.println(" - getWeight_Calculator: START ---- ");
+		System.out.println(" - getWeight_Calculator: Weight ---- "+ weightFrom);
+		System.out.println(" - getWeight_Calculator: unity_weight ---- "+ unity_weight);
 
 		
 		try {
 			// Conversion Unit Measurement
 			weightCountry = weightConvert.getAnalizeUnityWeight(weightFrom, unity_weight);
+			System.out.println(" - getWeight_Calculator: weightFormat ---- "+ weightCountry);
 			
 			for(Entry<String, List<Costs>> entry : roadwayBRE_Obj.costs.entrySet()) {
 				String country = entry.getKey();

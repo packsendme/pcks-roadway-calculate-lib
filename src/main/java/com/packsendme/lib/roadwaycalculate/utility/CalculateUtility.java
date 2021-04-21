@@ -11,18 +11,21 @@ public class CalculateUtility {
 		Double weightVlr = 0.0;
 		Double weightVlrFormat = 0.0;
 		
+		// Grama
 		if(unityWeight.get(1) != null) {
 			weightVlrFormat = weight;
 		}
+		// Kilograma
 		else if(unityWeight.get(2) != null) {
 			weightVlr = kilogramoToGrama(weight);
-			weightVlrFormat = weightVlr * 1000;
+			//weightVlrFormat = weightVlr / 1000;
 		}
+		// Tonelada
 		else if(unityWeight.get(3) != null) {
 			weightVlr = ToneladaToGrama(weight);
-			weightVlrFormat = weightVlr * 1000000;
+			//weightVlrFormat = weightVlr / 1000000;
 		}
-		return weightVlrFormat;
+		return weightVlr;
 	}
 	
 	public Double kilogramoToGrama(double weight) {
