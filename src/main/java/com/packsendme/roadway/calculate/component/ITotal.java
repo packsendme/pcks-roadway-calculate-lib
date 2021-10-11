@@ -1,4 +1,4 @@
-package com.packsendme.lib.roadwaycalculate.total;
+package com.packsendme.roadway.calculate.component;
 
 import com.packsendme.lib.common.response.dto.api.GoogleAPITrackingResponse_Dto;
 import com.packsendme.roadway.commons.dto.SimulationRoadwayDto;

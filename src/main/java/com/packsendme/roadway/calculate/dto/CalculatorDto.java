@@ -1,4 +1,4 @@
-package com.packsendme.lib.roadwaycalculate.dto;
+package com.packsendme.roadway.calculate.dto;
 
 import lombok.Getter;
 import lombok.Setter;

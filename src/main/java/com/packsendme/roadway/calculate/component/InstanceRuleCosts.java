@@ -1,4 +1,4 @@
-package com.packsendme.lib.roadwaycalculate.rulesinstance;
+package com.packsendme.roadway.calculate.component;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -10,13 +10,10 @@ import java.util.Map.Entry;
 import org.springframework.stereotype.Component;
 
 import com.packsendme.roadway.commons.dto.SimulationRoadwayDto;
+import com.packsendme.roadway.calculate.dto.CalculatorDto;
+import com.packsendme.roadway.calculate.utility.CalculateUtility;
 import com.packsendme.roadway.commons.dto.CostsRoadwayDto;
 import com.packsendme.roadway.commons.response.SimulationRoadwayResponse;
-import com.packsendme.lib.roadwaycalculate.dto.CalculatorDto;
-import com.packsendme.lib.roadwaycalculate.rules.RoadwayRulesCosts;
-import com.packsendme.lib.roadwaycalculate.rules.VehicleAggregationCostsImpl;
-import com.packsendme.lib.roadwaycalculate.total.TotalImpl;
-import com.packsendme.lib.roadwaycalculate.utility.CalculateUtility;
 import com.packsendme.roadway.commons.entity.Category;
 import com.packsendme.roadway.commons.entity.Roadway;
 import com.packsendme.roadway.commons.entity.Vehicle;

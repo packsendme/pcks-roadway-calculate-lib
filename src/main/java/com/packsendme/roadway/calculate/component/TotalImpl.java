@@ -1,4 +1,4 @@
-package com.packsendme.lib.roadwaycalculate.total;
+package com.packsendme.roadway.calculate.component;
 
 import java.util.Map.Entry;
 

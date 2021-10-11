@@ -1,9 +1,9 @@
-package com.packsendme.lib.roadwaycalculate.rules;
+package com.packsendme.roadway.calculate.component;
 
 import java.util.List;
 import java.util.Map;
 
-import com.packsendme.lib.roadwaycalculate.dto.CalculatorDto;
+import com.packsendme.roadway.calculate.dto.CalculatorDto;
 
 public interface IVehicleAggregationCosts {
 
