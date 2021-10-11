@@ -24,12 +24,6 @@
 	</dependency>
 	
 	<dependency>
-		<groupId>com.packsendme.lib.common</groupId>
-		<artifactId>pcks-common-lib</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-	</dependency>
-		
-	<dependency>
     	<groupId>org.springframework</groupId>
     	<artifactId>spring-webmvc</artifactId>
     	<version>4.3.5.RELEASE</version>
@@ -41,12 +35,6 @@
     	<version>2.0.0.RELEASE</version>
 	</dependency>
 
-    <dependency>
-		<groupId>com.packsendme.lib.roadway</groupId>
-		<artifactId>pcks-roadbrewa-roadway-lib</artifactId>
-  		<version>0.0.1-SNAPSHOT</version>		
-	</dependency>
-		
     <dependency>
     	<groupId>org.modelmapper</groupId>
     	<artifactId>modelmapper</artifactId>
@@ -61,8 +49,8 @@
 	</dependency>
 
 	<dependency>
-		<groupId>com.packsendme.lib.roadway</groupId>
-  		<artifactId>pcks-roadway-simulation-lib</artifactId>
+		<groupId>com.packsendme.roadway.lib</groupId>
+  		<artifactId>pcks-roadway-commons-lib</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</dependency>
 	

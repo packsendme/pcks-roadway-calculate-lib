@@ -9,12 +9,12 @@ import java.util.Map.Entry;
 import com.packsendme.lib.common.constants.generic.Fuel_Constants;
 import com.packsendme.lib.common.response.dto.api.GoogleAPITrackingResponse_Dto;
 import com.packsendme.lib.common.response.dto.api.RoadwayTrackingResponse_Dto;
-import com.packsendme.lib.roadway.simulation.request.SimulationRoadwayRequest_Dto;
-import com.packsendme.lib.roadway.simulation.response.SimulationRoadwayResponse;
+import com.packsendme.roadway.commons.dto.SimulationRoadwayDto;
+import com.packsendme.roadway.commons.response.SimulationRoadwayResponse;
 import com.packsendme.lib.roadwaycalculate.dto.CalculatorDto;
 import com.packsendme.lib.roadwaycalculate.utility.CalculateUtility;
-import com.packsendme.roadbrewa.entity.Costs;
-import com.packsendme.roadbrewa.entity.Roadway;
+import com.packsendme.roadway.commons.entity.Costs;
+import com.packsendme.roadway.commons.entity.Roadway;
 
 public abstract class RoadwayRulesCosts {
 	
@@ -65,7 +65,6 @@ public abstract class RoadwayRulesCosts {
 	
 	public Map<String, List<CalculatorDto>> getWeight_Calculator(Double weightFrom, Map<Integer, String> unity_weight, GoogleAPITrackingResponse_Dto googleAPI, Roadway roadwayBRE_Obj) {
 		double weightCountry = 0.0;
-		double weightFormat_vlr = 0.0;
 		CalculateUtility weightConvert = new CalculateUtility();
 		
 		Map<String, List<CalculatorDto>> weightCost_M = new HashMap<String, List<CalculatorDto>>();
@@ -326,6 +325,6 @@ public abstract class RoadwayRulesCosts {
 		}
 	}
 	
-	abstract public SimulationRoadwayResponse instanceRulesCosts(SimulationRoadwayRequest_Dto requestData);
+	abstract public SimulationRoadwayResponse instanceRulesCosts(SimulationRoadwayDto requestData);
 
 }

@@ -9,17 +9,17 @@ import java.util.Map.Entry;
 
 import org.springframework.stereotype.Component;
 
-import com.packsendme.lib.roadway.simulation.request.SimulationRoadwayRequest_Dto;
-import com.packsendme.lib.roadway.simulation.response.CostsRoadway;
-import com.packsendme.lib.roadway.simulation.response.SimulationRoadwayResponse;
+import com.packsendme.roadway.commons.dto.SimulationRoadwayDto;
+import com.packsendme.roadway.commons.dto.CostsRoadwayDto;
+import com.packsendme.roadway.commons.response.SimulationRoadwayResponse;
 import com.packsendme.lib.roadwaycalculate.dto.CalculatorDto;
 import com.packsendme.lib.roadwaycalculate.rules.RoadwayRulesCosts;
 import com.packsendme.lib.roadwaycalculate.rules.VehicleAggregationCostsImpl;
 import com.packsendme.lib.roadwaycalculate.total.TotalImpl;
 import com.packsendme.lib.roadwaycalculate.utility.CalculateUtility;
-import com.packsendme.roadbrewa.entity.Category;
-import com.packsendme.roadbrewa.entity.Roadway;
-import com.packsendme.roadbrewa.entity.Vehicle;
+import com.packsendme.roadway.commons.entity.Category;
+import com.packsendme.roadway.commons.entity.Roadway;
+import com.packsendme.roadway.commons.entity.Vehicle;
 
 @Component
 public class InstanceRuleCosts extends RoadwayRulesCosts{
@@ -34,7 +34,7 @@ public class InstanceRuleCosts extends RoadwayRulesCosts{
 	CalculateUtility weightConvertObj = new CalculateUtility();
 	
 	@Override
-	public SimulationRoadwayResponse instanceRulesCosts(SimulationRoadwayRequest_Dto requestData) {
+	public SimulationRoadwayResponse instanceRulesCosts(SimulationRoadwayDto requestData) {
 		
 		if(requestData.roadwayRule.tariffPlan.weight_plan == true) {
 			if(requestData.weight_max == 0.0) {
@@ -80,12 +80,12 @@ public class InstanceRuleCosts extends RoadwayRulesCosts{
  		return simulationResulObj;
 	}
 	
-	private SimulationRoadwayResponse calcTotalCostsRoadway(Roadway roadwayBRE_Obj, SimulationRoadwayRequest_Dto requestData) {
+	private SimulationRoadwayResponse calcTotalCostsRoadway(Roadway roadwayBRE_Obj, SimulationRoadwayDto requestData) {
 		DecimalFormat df2 = new DecimalFormat("#.##");
 		SimulationRoadwayResponse simulationRoadwayResponse_Dto = null;
 		VehicleAggregationCostsImpl vehicleAggregationObj = new VehicleAggregationCostsImpl();
 		TotalImpl totalObj = new TotalImpl();
-		List<CostsRoadway> costsVehicle_L = new ArrayList<CostsRoadway>();
+		List<CostsRoadwayDto> costsVehicle_L = new ArrayList<CostsRoadwayDto>();
 		boolean statusVehiculoUnity = false;
 		List<String> vehicleCheckRule = new ArrayList<String>();
 		
@@ -257,7 +257,7 @@ public class InstanceRuleCosts extends RoadwayRulesCosts{
 			System.out.println("---------------------------------------");
 
 			
-			CostsRoadway costsVehicleObj = new CostsRoadway(vehicle, vlr_weightS, vlr_dimensionS, vlr_distanceS, vlr_worktimeS,
+			CostsRoadwayDto costsVehicleObj = new CostsRoadwayDto(vehicle, vlr_weightS, vlr_dimensionS, vlr_distanceS, vlr_worktimeS,
 					vlr_tollsS, vlr_fuelconsumptionS, cost_total_baseS, vlr_fragileS, vlr_persishableS, cost_total_riskS, vlr_reshippingS,
 					vlr_operationOwnerS, vlr_employeerS, requestData.exchangeObj.toCurrent, df2.format(cost_total_US), cost_total_EX);
 			costsVehicle_L.add(costsVehicleObj);

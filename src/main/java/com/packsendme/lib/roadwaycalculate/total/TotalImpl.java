@@ -4,10 +4,9 @@ import java.util.Map.Entry;
 
 import com.packsendme.lib.common.response.dto.api.GoogleAPITrackingResponse_Dto;
 import com.packsendme.lib.common.response.dto.api.RoadwayTrackingResponse_Dto;
-import com.packsendme.lib.roadway.simulation.request.SimulationRoadwayRequest_Dto;
-import com.packsendme.lib.roadwaycalculate.dto.CalculatorDto;
+import com.packsendme.roadway.commons.dto.SimulationRoadwayDto;
+import com.packsendme.roadway.commons.entity.Roadway;
 import com.packsendme.lib.utility.FormatValueMoney;
-import com.packsendme.roadbrewa.entity.Roadway;
 
 public class TotalImpl implements ITotal {
 	
@@ -80,7 +79,7 @@ public class TotalImpl implements ITotal {
 	}
 	
 	@Override
-	public String getExchange_Total(SimulationRoadwayRequest_Dto simulationDto, double vlr_total) {
+	public String getExchange_Total(SimulationRoadwayDto simulationDto, double vlr_total) {
 		try {
 			double vlr_exchange = vlr_total * simulationDto.exchangeObj.value;
 			return valueFormatObj.formatDoubleStringInCurrency(vlr_exchange,simulationDto.language_locale, simulationDto.country_locale);
