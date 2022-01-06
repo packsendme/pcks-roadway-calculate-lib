@@ -274,7 +274,7 @@ public class InstanceRuleCosts extends RoadwayRulesCosts{
 		System.out.println("---------------------------------------");
 		System.out.println(" ");
 
-		simulationRoadwayResponse_Dto = new SimulationRoadwayResponse(requestData.googleTracking.distance_total,requestData.googleTracking.duration,tollsTotal_CountryAll,null, costsVehicle_L, new Date());
+		simulationRoadwayResponse_Dto = new SimulationRoadwayResponse(requestData.googleTracking.distance_total,requestData.googleTracking.duration,tollsTotal_CountryAll,requestData, costsVehicle_L, new Date());
 		return simulationRoadwayResponse_Dto;
 	}
 }
